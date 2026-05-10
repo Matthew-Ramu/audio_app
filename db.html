@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="hiend-common.css" />
+</head>
+<body class="lang-zh-TW">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="site-nav-inner">
+      <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
+      <div class="nav-links">
+        <a href="index.html#section-tools" id="nav-link-tools"></a>
+        <a href="damping.html" id="nav-damping"></a>
+        <a href="cable.html" id="nav-cable"></a>
+        <a href="hq-filters.html" id="nav-hq"></a>
+        <a href="db.html" id="nav-db" class="is-current" aria-current="page"></a>
+        <a href="knowledge.html" id="nav-link-knowledge"></a>
+        <a href="roon.html" id="nav-roon"></a>
+      </div>
+      <div class="nav-actions">
+        <label for="lang-select" id="i18n-lang-label"></label>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="ru">Русский</option>
+          <option value="ar">العربية</option>
+          <option value="ja">日本語</option>
+          <option value="zh-CN">中文（简体）</option>
+          <option value="zh-TW">中文（繁體）</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="page-section page-hero" id="top">
+      <div class="brand-line" id="i18n-brand"></div>
+      <h1 id="i18n-page-title"></h1>
+    </header>
+
+    <section class="panel tool-single page-section" aria-labelledby="i18n-page-title">
+      <p class="hint" id="db-hint"></p>
+      <label for="db-input" id="i18n-db-label"></label>
+      <input type="number" id="db-input" step="0.1" value="0" inputmode="decimal" />
+      <div id="db-live-result" class="db-live-result" role="status" aria-live="polite"></div>
+    </section>
+    <footer class="site-footer">
+      <p class="footer-copy" id="i18n-footer-copy"></p>
+      <p class="footer-note" id="i18n-footer-note"></p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+
+      var STORAGE_KEY = "hiend-audio-calc-lang";
+      var DEFAULT_LANG = "zh-TW";
+            var STRINGS = {
+        en: {
+          htmlLang: "en",
+          docTitle: "dB ↔ voltage ratio · Hi-End Lab",
+          langLabel: "Language",
+          navBrandText: "Hi-End Lab",
+          navTools: "Tools",
+          navKnowledge: "Primer",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "Cable",
+          navHq: "Filters",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
+          footerNote: "REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER",
+          dbTitle: "Interactive dB ↔ voltage ratio",
+          dbHint: "Relative level ΔdB multiplies amplitude by 10<sup>ΔdB/20</sup>. +6 dB ≈ ×2 voltage; −6 dB ≈ ×0.5.",
+          dbLabel: "Level change ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → voltage × <strong>" +
+              ratio.toFixed(5) +
+              "</strong> (amplitude ratio)"
+            );
+          },
+          errDb: "Enter a valid number.",
+        },
+        ja: {
+          htmlLang: "ja",
+          docTitle: "dB と電圧倍率 · Hi-End Lab",
+          langLabel: "表示言語",
+          navBrandText: "Hi-End Lab",
+          navTools: "ツール",
+          navKnowledge: "解説",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "ケーブル",
+          navHq: "フィルタ",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
+          footerNote: "参考ツール · HQPLAYER 非関連",
+          dbTitle: "dB と電圧倍率（対話）",
+          dbHint: "ΔdB は振幅に 10<sup>Δ/20</sup> を乗じます。+6 dB ≒ 電圧 2 倍。",
+          dbLabel: "レベル変化 ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → 電圧 <strong>" +
+              ratio.toFixed(5) +
+              "</strong> 倍"
+            );
+          },
+          errDb: "数値を入力してください。",
+        },
+        "zh-CN": {
+          htmlLang: "zh-Hans",
+          docTitle: "分贝与电压倍数 · Hi-End Lab",
+          langLabel: "语言",
+          navBrandText: "Hi-End Lab",
+          navTools: "计算工具",
+          navKnowledge: "知识科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "线材",
+          navHq: "滤波表",
+          navDb: "分贝",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音响工程师的数字工具箱 © 2024",
+          footerNote: "参考工具 · 与 HQPLAYER 无关联",
+          dbTitle: "交互式音量换算 · dB ↔ 电压倍",
+          dbHint: "相对电平 ΔdB：电压乘以 10<sup>Δ/20</sup>。+6 dB ≈ 电压 ×2；-6 dB ≈ ×0.5。",
+          dbLabel: "电平变化 ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → 电压 × <strong>" +
+              ratio.toFixed(5) +
+              "</strong>"
+            );
+          },
+          errDb: "请输入有效数字。",
+        },
+        "zh-TW": {
+          htmlLang: "zh-Hant",
+          docTitle: "分貝與電壓倍數 · Hi-End Lab",
+          langLabel: "語言",
+          navBrandText: "Hi-End Lab",
+          navTools: "計算工具",
+          navKnowledge: "知識科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "線材",
+          navHq: "濾波表",
+          navDb: "分貝",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音響工程師的數位工具箱 © 2024",
+          footerNote: "參考工具 · 與 HQPLAYER 無商業關聯",
+          dbTitle: "互動式音量換算 · dB ↔ 電壓倍數",
+          dbHint: "相對電平 ΔdB：電壓乘以 10<sup>Δ/20</sup>。+6 dB ≈ 電壓 ×2；-6 dB ≈ ×0.5。",
+          dbLabel: "電平變化 ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → 電壓 × <strong>" +
+              ratio.toFixed(5) +
+              "</strong>"
+            );
+          },
+          errDb: "請輸入有效數字。",
+        },
+
+        ru: {
+          htmlLang: "ru",
+          docTitle: "дБ ↔ напряжение · Hi-End Lab",
+          langLabel: "Язык",
+          navBrandText: "Hi-End Lab",
+          navTools: "Инструменты",
+          navKnowledge: "Обзор",
+          navRoon: "roon",
+          navDamping: "Демпф.",
+          navCable: "Кабель",
+          navHq: "Фильтры",
+          navDb: "дБ",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Цифровой набор инженера по звуку © 2024",
+          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER",
+          dbTitle: "Интерактивно: дБ ↔ отношение напряжения",
+          dbHint:
+            "Относительный уровень ΔdB умножает амплитуду на 10<sup>ΔdB/20</sup>. +6 дБ ≈ ×2 напряжения; −6 дБ ≈ ×0,5.",
+          dbLabel: "Изменение уровня ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> дБ → напряжение × <strong>" +
+              ratio.toFixed(5) +
+              "</strong>"
+            );
+          },
+          errDb: "Введите корректное число."
+        },
+        de: {
+          htmlLang: "de",
+          docTitle: "dB ↔ Spannungsverhältnis · Hi-End Lab",
+          langLabel: "Sprache",
+          navBrandText: "Hi-End Lab",
+          navTools: "Werkzeuge",
+          navKnowledge: "Grundlagen",
+          navRoon: "roon",
+          navDamping: "Dämpfung",
+          navCable: "Kabel",
+          navHq: "Filter",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
+          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER",
+          dbTitle: "Interaktiv dB ↔ Spannungsverhältnis",
+          dbHint:
+            "Relativer Pegel ΔdB multipliziert die Amplitude mit 10<sup>ΔdB/20</sup>. +6 dB ≈ Spannung ×2; −6 dB ≈ ×0,5.",
+          dbLabel: "Pegeländerung ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → Spannung × <strong>" +
+              ratio.toFixed(5) +
+              "</strong>"
+            );
+          },
+          errDb: "Bitte eine gültige Zahl eingeben."
+        },
+        ar: {
+          htmlLang: "ar",
+          docTitle: "ديسيبل ↔ نسبة الجهد · Hi-End Lab",
+          langLabel: "اللغة",
+          navBrandText: "Hi-End Lab",
+          navTools: "الأدوات",
+          navKnowledge: "مقدّمة",
+          navRoon: "roon",
+          navDamping: "التخميد",
+          navCable: "الكابلات",
+          navHq: "المرشحات",
+          navDb: "ديسيبل",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
+          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER",
+          dbTitle: "تفاعلي: ديسيبل ↔ نسبة الجهد",
+          dbHint:
+            "ΔdB النسبي يضرب السعة بـ 10<sup>ΔdB/20</sup>. +6 dB ≈ ضعف الجهد؛ −6 dB ≈ النصف.",
+          dbLabel: "تغيير المستوى ΔdB",
+          dbResultHtml: function (ratio, db) {
+            return (
+              "Δ = <strong>" +
+              db +
+              "</strong> dB → الجهد × <strong>" +
+              ratio.toFixed(5) +
+              "</strong>"
+            );
+          },
+          errDb: "أدخل رقمًا صالحًا."
+        }
+
+      };
+      function getStrings(lang) {
+        return STRINGS[lang] || STRINGS[DEFAULT_LANG];
+      }
+      function setBodyLangClass(lang) {
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW", "lang-de", "lang-ru", "lang-ar");
+        document.body.classList.add("lang-" + lang);
+      }
+      var langSelect = document.getElementById("lang-select");
+      var currentLang = DEFAULT_LANG;
+
+      function refreshDb() {
+        var L = getStrings(currentLang);
+        var inp = document.getElementById("db-input");
+        var out = document.getElementById("db-live-result");
+        if (!inp.value.trim()) {
+          out.innerHTML = "";
+          return;
+        }
+        var db = parseFloat(inp.value, 10);
+        if (Number.isNaN(db)) {
+          out.textContent = L.errDb;
+          return;
+        }
+        var ratio = Math.pow(10, db / 20);
+        out.innerHTML = L.dbResultHtml(ratio, db);
+      }
+
+      function applyLocale(lang) {
+        if (!STRINGS[lang]) lang = DEFAULT_LANG;
+        currentLang = lang;
+        setBodyLangClass(lang);
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        var L = getStrings(lang);
+        document.documentElement.lang = L.htmlLang;
+        document.title = L.docTitle;
+        document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-link-tools").textContent = L.navTools;
+        document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
+        document.getElementById("nav-roon").textContent = L.navRoon;
+        document.getElementById("nav-damping").textContent = L.navDamping;
+        document.getElementById("nav-cable").textContent = L.navCable;
+        document.getElementById("nav-hq").textContent = L.navHq;
+        document.getElementById("nav-db").textContent = L.navDb;
+        document.getElementById("i18n-lang-label").textContent = L.langLabel;
+        document.getElementById("i18n-brand").textContent = L.brandLine;
+        document.getElementById("i18n-page-title").textContent = L.dbTitle;
+        document.getElementById("db-hint").innerHTML = L.dbHint;
+        document.getElementById("i18n-db-label").textContent = L.dbLabel;
+        document.getElementById("i18n-footer-copy").textContent = L.footerCopy;
+        document.getElementById("i18n-footer-note").textContent = L.footerNote;
+        langSelect.value = lang;
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+        refreshDb();
+      }
+
+      document.getElementById("db-input").addEventListener("input", refreshDb);
+      document.getElementById("db-input").addEventListener("change", refreshDb);
+
+      langSelect.addEventListener("change", function () {
+        applyLocale(langSelect.value);
+      });
+
+      var initial = DEFAULT_LANG;
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && STRINGS[saved]) initial = saved;
+      } catch (e) {}
+      applyLocale(initial);
+    })();
+  </script>
+</body>
+</html>

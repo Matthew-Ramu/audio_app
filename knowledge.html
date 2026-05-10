@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>發燒友知識科普</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --metal-edge: #0f1012;
+      --text-silver: #e8eaef;
+      --text-muted: #9aa0ae;
+      --gold: #c9a962;
+      --gold-bright: #e4d4a8;
+      --gold-deep: #8b7340;
+      --accent-glow: rgba(201, 169, 98, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.lang-en {
+      font-family: "Noto Sans TC", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body.lang-ja {
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    }
+
+    body.lang-zh-CN {
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body.lang-zh-TW {
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    body.lang-ru {
+      font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body.lang-de {
+      font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
+    }
+
+    body.lang-ar {
+      font-family: "Noto Sans Arabic", "Noto Sans", "Segoe UI", sans-serif;
+    }
+
+    html[dir="rtl"] .site-nav-inner {
+      flex-direction: row-reverse;
+    }
+
+    html[dir="rtl"] .nav-links {
+      flex-direction: row-reverse;
+    }
+
+    html[dir="rtl"] .nav-actions {
+      flex-direction: row-reverse;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text-silver);
+      background:
+        linear-gradient(165deg, #25262b 0%, #151618 45%, #1c1d21 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 1px,
+          rgba(255, 255, 255, 0.02) 1px,
+          rgba(255, 255, 255, 0.02) 2px
+        );
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 169, 98, 0.08), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(80, 85, 95, 0.15), transparent 50%);
+      z-index: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      border-bottom: 1px solid rgba(201, 169, 98, 0.22);
+      background:
+        linear-gradient(180deg, rgba(22, 23, 26, 0.94) 0%, rgba(14, 15, 17, 0.92) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .site-nav::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.35), transparent);
+      opacity: 0.65;
+    }
+
+    .site-nav-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0.55rem 1rem;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.45rem 0.65rem;
+    }
+
+    .nav-brand {
+      flex-shrink: 0;
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      text-decoration: none;
+      padding: 0.35rem 0;
+      border-left: 3px solid var(--gold);
+      padding-left: 0.65rem;
+      line-height: 1.3;
+      text-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .nav-brand:hover {
+      color: #f5ebd0;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.28rem 0.38rem;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.36rem 0.48rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      border-radius: 3px;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-silver);
+      border-color: rgba(201, 169, 98, 0.35);
+      background: rgba(201, 169, 98, 0.06);
+    }
+
+    .nav-links a.is-current {
+      color: var(--gold-bright);
+      border-color: rgba(201, 169, 98, 0.45);
+      background: rgba(201, 169, 98, 0.08);
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.35rem 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .nav-actions label {
+      margin: 0;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-actions select {
+      width: auto;
+      min-width: 7.75rem;
+      max-width: 11rem;
+      padding: 0.36rem 0.45rem;
+      font-size: 0.7rem;
+      font-family: inherit;
+      color: var(--text-silver);
+      background: linear-gradient(180deg, #232428 0%, #18191c 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      outline: none;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.75rem 1.35rem 3.5rem;
+    }
+
+    .page-section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 5.5rem;
+    }
+
+    header.page-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 1.75rem 1rem 2rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        linear-gradient(165deg, rgba(48, 50, 56, 0.35) 0%, rgba(18, 19, 22, 0.65) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 16px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .brand-line {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.85;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: "Orbitron", "Noto Sans TC", "Noto Sans SC", "Noto Sans JP", sans-serif;
+      font-size: clamp(1.25rem, 4vw, 1.65rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 45%, var(--gold-deep) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    .subtitle {
+      margin-top: 0.65rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .panel {
+      background:
+        linear-gradient(145deg, rgba(55, 58, 65, 0.45) 0%, rgba(28, 29, 33, 0.85) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 1.65rem 1.45rem 1.85rem;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+        0 10px 36px rgba(0, 0, 0, 0.45),
+        0 0 0 1px var(--metal-edge);
+      position: relative;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.35), transparent);
+      opacity: 0.7;
+    }
+
+    .panel-title {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-title::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 1px;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .knowledge-panel .edu-lead {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      padding: 1rem 1.1rem;
+      border-radius: 4px;
+      border: 1px dashed rgba(201, 169, 98, 0.22);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 720px) {
+      .edu-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem 1.75rem;
+      }
+    }
+
+    .edu-card--wide {
+      grid-column: 1 / -1;
+    }
+
+    .edu-table-wrap {
+      overflow-x: auto;
+      margin-top: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .edu-compare {
+      width: 100%;
+      min-width: 280px;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .edu-compare th,
+    .edu-compare td {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .edu-compare thead th {
+      color: var(--gold-bright);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .edu-compare tbody td:first-child {
+      color: var(--text-muted);
+    }
+
+    .edu-note {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed rgba(201, 169, 98, 0.2);
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+    }
+
+    .edu-card {
+      padding: 1.2rem 1.15rem 1.35rem;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background:
+        linear-gradient(160deg, rgba(36, 38, 44, 0.65) 0%, rgba(18, 19, 22, 0.85) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .edu-card h3 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold-bright);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+    }
+
+    .edu-card .edu-body {
+      font-size: 0.86rem;
+      line-height: 1.82;
+      color: var(--text-silver);
+    }
+
+    .edu-card .edu-body p + p {
+      margin-top: 0.85rem;
+    }
+
+    .edu-card .edu-body strong {
+      color: var(--gold-bright);
+      font-weight: 600;
+    }
+
+    .edu-list {
+      margin-top: 0.85rem;
+      padding-left: 1.15rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.75;
+    }
+
+    .edu-list li + li {
+      margin-top: 0.45rem;
+    }
+
+    .site-footer {
+      margin-top: 3rem;
+      padding: 2rem 1rem 2.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201, 169, 98, 0.18);
+      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 100%);
+    }
+
+    .site-footer .footer-copy {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      color: rgba(232, 234, 239, 0.72);
+      margin-bottom: 0.65rem;
+    }
+
+    .site-footer .footer-note {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: rgba(154, 160, 174, 0.42);
+    }
+  </style>
+</head>
+<body class="lang-zh-TW">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="site-nav-inner">
+      <a class="nav-brand" href="index.html#top" id="nav-brand-text">Hi-End Lab</a>
+      <div class="nav-links">
+        <a href="index.html#section-tools" id="nav-link-tools">計算工具</a>
+        <a href="damping.html" id="nav-damping">阻尼</a>
+        <a href="cable.html" id="nav-cable">線材</a>
+        <a href="hq-filters.html" id="nav-hq">濾波表</a>
+        <a href="db.html" id="nav-db">dB</a>
+        <a href="knowledge.html" class="is-current" id="nav-link-knowledge" aria-current="page">知識科普</a>
+        <a href="roon.html" id="nav-roon">roon</a>
+      </div>
+      <div class="nav-actions">
+        <label for="lang-select" id="i18n-lang-label">語言</label>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="ru">Русский</option>
+          <option value="ar">العربية</option>
+          <option value="ja">日本語</option>
+          <option value="zh-CN">中文（简体）</option>
+          <option value="zh-TW">中文（繁體）</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="page-section page-hero" id="top">
+      <div class="brand-line" id="i18n-brand">Hi-End Digital Audio Lab</div>
+      <h1 id="i18n-page-title">發燒友知識科普</h1>
+      <p class="subtitle" id="i18n-subtitle"></p>
+    </header>
+
+    <section class="panel knowledge-panel page-section" aria-labelledby="i18n-page-title">
+      <p class="edu-lead" id="edu-lead"></p>
+      <div class="edu-grid">
+        <article class="edu-card edu-card--wide">
+          <h3 id="edu-pcm-heading"></h3>
+          <div class="edu-body" id="edu-pcm-body"></div>
+        </article>
+        <article class="edu-card">
+          <h3 id="edu-dsd-heading"></h3>
+          <div class="edu-body" id="edu-dsd-body"></div>
+        </article>
+        <article class="edu-card">
+          <h3 id="edu-ups-heading"></h3>
+          <div class="edu-body" id="edu-ups-body"></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p class="footer-copy" id="i18n-footer-copy">音響工程師的數位工具箱 © 2024</p>
+      <p class="footer-note" id="i18n-footer-note">REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER</p>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "hiend-audio-calc-lang";
+      var DEFAULT_LANG = "zh-TW";
+
+      var STRINGS = {
+        en: {
+          htmlLang: "en",
+          docTitle: "Audiophile Primer · PCM, DSD & Upsampling",
+          langLabel: "Language",
+          navBrandText: "Hi-End Lab",
+          navTools: "Tools",
+          navKnowledge: "Primer",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "Cable",
+          navHq: "Filters",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Audiophile Primer",
+          subtitle: "PCM · DSD · Upsampling · Playback chain",
+          eduLead:
+            "Conceptual notes on PCM vs DSD, what DSD means in a playback chain, and why upsampling matters—education only; not a substitute for vendor specs or lab measurements.",
+          eduPcmHeading: "PCM vs DSD — key differences",
+          eduPcmBody:
+            "<p><strong>PCM</strong> (Pulse Code Modulation) is the mainstream digital audio representation: at a fixed <strong>sample rate</strong> (e.g. 44.1, 48, 96, 192 kHz), each instant is stored as a <strong>multi‑bit word</strong> (16/24/32‑bit) for amplitude. Production, editing, mixing, and most distribution (WAV, FLAC, AIFF, etc.) revolve around PCM or lossless wrappers around it.</p><p><strong>DSD</strong> uses a <strong>1‑bit stream at a very high sample rate</strong> (e.g. ~2.8224 MHz for DSD64, then ×2/×4/×8 for higher grades). Information is carried by ultra‑high‑frequency switching density, while quantization noise is typically <strong>noise‑shaped</strong> out of the audible band. Files may appear as DSF/DFF or inside disc images—playback often involves specific filters or SDM paths.</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\"><thead><tr><th scope=\"col\">Aspect</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>How time/amplitude is coded</td><td>Regular samples + multi‑bit depth per sample</td><td>Very high‑rate 1‑bit density; noise shaping is integral</td></tr><tr><td>Production workflow</td><td>Mature tools for edit/mix/master; universal interchange</td><td>Less convenient for heavy editing; niche mastering paths</td></tr><tr><td>Typical DAC paths</td><td>Often filtered directly toward the analog stage (plus OS)</td><td>Native DSD, or conversion to PCM / multibit internally—depends on chip & firmware</td></tr></tbody></table></div><p class=\"edu-note\"><strong>No universal “better sounding” label</strong>: perception depends on the specific master, digital filters, clocking, and the entire analog chain—not the badge “PCM” or “DSD” alone.</p>",
+          eduDsdHeading: "What is DSD?",
+          eduDsdBody:
+            "<p>DSD (Direct Stream Digital) represents analog‑like waveforms using a <strong>very high sample‑rate 1‑bit stream</strong>. Common labels include DSD64 (~2.8224 MHz), DSD128, DSD256, and the enthusiast talking point <strong>DSD512</strong>. Unlike PCM—where each sample stores multi‑bit amplitude—DSD carries information through <strong>ultra‑high‑frequency switching density</strong>, while quantization noise is shaped toward frequencies mostly outside the audible band.</p><p>In practice, even “DSD files” may still pass through <strong>digital filtering, conversion, or remodulation</strong> before reaching the DAC chip; what finally enters the converter may differ from the label on the box. That is why listeners sweat HQPlayer settings—interpolation filters and SDM/Δ‑Σ paths influence <strong>stopband rejection, phase behavior, and the noise spectrum</strong>.</p>",
+          eduUpsHeading: "Why upsample?",
+          eduUpsBody:
+            "<p><strong>Upsampling</strong> raises a lower sample rate toward a higher target (for example, pushing toward a higher DSD multiple). The goal is not to invent missing studio detail, but to give <strong>digital filters and noise shaping</strong> more computational room: transition bands can be tightened and quantization noise pushed farther from sensitive hearing ranges.</p><p>Higher targets usually raise <strong>CPU/memory load, latency, and power draw</strong>; fancier filters also demand disciplined buffering and clocking. Start from <strong>dropout‑free playback</strong>, then increase rate or algorithm weight step by step.</p><ul class=\"edu-list\"><li>If you hear dropouts or buffer warnings: lower the target rate or switch to lighter filters/SDM presets.</li><li>If your system has headroom: try higher DSD multiples with more complete shaping chains.</li><li>Perceived differences still depend on <strong>room acoustics, analog stages, transducers, and placement</strong>—digital processing is only one link.</li></ul>",
+          footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
+          footerNote: "REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER"
+        },
+        ja: {
+          htmlLang: "ja",
+          docTitle: "オーディオ愛好家向けミニ講座 · PCM／DSD／アップサンプル",
+          langLabel: "表示言語",
+          navBrandText: "Hi-End Lab",
+          navTools: "ツール",
+          navKnowledge: "解説",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "ケーブル",
+          navHq: "フィルタ",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "オーディオ愛好家向けミニ講座",
+          subtitle: "PCM · DSD · アップサンプル · 再生チェーン",
+          eduLead:
+            "PCM と DSD の違い、再生チェーンでの DSD の意味、アップサンプルの役割を整理したメモです（教育目的／メーカー仕様や計測手順の代替にはなりません）。",
+          eduPcmHeading: "PCM と DSD の違いは？",
+          eduPcmBody:
+            "<p><strong>PCM</strong>（Pulse Code Modulation）は最も一般的なデジタル音響の表現で、<strong>サンプリング周波数</strong>（44.1 kHz、48 kHz、96 kHz、192 kHz など）ごとに<strong>多位元</strong>（16/24/32-bit など）で振幅を記録します。制作・編集・ミックス・マスタリングや WAV／FLAC／AIFF などの流通の中心は PCM（またはその非可逆／可逆ラッパー）です。</p><p><strong>DSD</strong> は<strong>1-bit・超高サンプリングレート</strong>のストリームで波形に近づけます（DSD64 で約 2.8224 MHz、さらに倍率で DSD128／256／512）。情報は超高頻のスイッチング密度で運ばれ、量子化ノイズは<strong>ノイズシェイピング</strong>で可聴帯の外へ押しやすくします。ファイルは DSF／DFF やディスクイメージなどの形があり、再生側ではフィルタや SDM 経路が議論されやすいです。</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\"><thead><tr><th scope=\"col\">項目</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>時間／振幅の表現</td><td>等間隔サンプル + サンプルごとの多位元深度</td><td>超高レート 1-bit の密度変化（ノイズシェイピングが前提）</td></tr><tr><td>制作ワークフロー</td><td>編集・エフェクト処理に強く、エコシステムが成熟</td><td>ヘビー編集には不向きな場合も／マスタリング経路はニッチ寄り</td></tr><tr><td>DAC 側の一般的な扱い</td><td>デジタルフィルタ後にアナログ段へ（オーバーサンプル含む）</td><td>ネイティブ DSD のほか、内部で PCM／マルチビットへ変換する機種も多い</td></tr></tbody></table></div><p class=\"edu-note\"><strong>「どちらが高音質」と一概には言えません</strong>。母帯、フィルタ、クロック、アナログ段を含む<strong>チェーン全体</strong>と室環境・システム次第です。</p>",
+          eduDsdHeading: "DSD とは？",
+          eduDsdBody:
+            "<p>DSD（Direct Stream Digital）は、<strong>超高サンプリングレートの 1-bit ストリーム</strong>で波形を表現する方式です。DSD64（約 2.8224 MHz）、DSD128、DSD256、話題になりやすい <strong>DSD512</strong> などがあります。PCM が「各サンプル点で多位元の振幅」を記録するのに対し、DSD は<strong>超高頻のスイッチング密度</strong>で情報を運び、量子化ノイズを可聴帯の外側へ押しやすくします（ノイズシェイピングの発想）。</p><p>実運用では「DSD ファイル」でも、DAC の直前までに<strong>デジタルフィルタ／変換／再変調</strong>が入ることがあり、パッケージ表示と実際に変換器へ入るストリームが一致しない場合があります。だからこそ HQPlayer の設定や補間フィルタ、SDM／Δ-Σ 経路が議論され、<strong>ストップバンド抑制・位相特性・ノイズスペクトル</strong>に影響します。</p>",
+          eduUpsHeading: "なぜアップサンプルするのか？",
+          eduUpsBody:
+            "<p><strong>アップサンプル（Upsampling）</strong>は、より低いサンプリングレートをより高い目標レートへ引き上げる処理です（より高い DSD 倍率を狙う文脈で語られることが多い）。目的は「録音に無かった細部を捏造する」ことではなく、<strong>デジタルフィルタとノイズシェイピング</strong>に計算の余裕を与えることです。遷移帯域をきれいに設計しやすく、量子化ノイズを感受性の高い周波数から遠ざけやすくなります。</p><p>ただし目標が上がるほど <strong>CPU／メモリ負荷、遅延、消費電力</strong>も増えがちで、精巧なフィルタほどバッファやクロック設計にも敏感になります。まずは<strong>途切れない再生</strong>を優先し、その後に倍率やアルゴリズムを段階的に上げるのが現実的です。</p><ul class=\"edu-list\"><li>クラックノイズやバッファ警告が出る：目標レートを下げる、またはより軽いフィルタ／SDM に。</li><li>マシンに余裕がある：より高い DSD 倍率や整形処理を試す。</li><li>最終的な印象は <strong>室内音響、アナログ段、トランスデューサとセッティング</strong>にも支配されます—デジタル処理は一部です。</li></ul>",
+          footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
+          footerNote: "参考ツール · HQPLAYER 非関連"
+        },
+        "zh-CN": {
+          htmlLang: "zh-Hans",
+          docTitle: "发烧友知识科普 · PCM、DSD 与升频",
+          langLabel: "语言",
+          navBrandText: "Hi-End Lab",
+          navTools: "计算工具",
+          navKnowledge: "知识科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "线材",
+          navHq: "滤波表",
+          navDb: "分贝",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "发烧友知识科普",
+          subtitle: "PCM · DSD · 升频 · 播放链",
+          eduLead:
+            "以下内容说明 PCM 与 DSD 的差异、播放链里 DSD 的含义，以及升频的作用。（科普用途，不能替代原厂规格或实验室测量流程。）",
+          eduPcmHeading: "PCM 和 DSD 有什么区别？",
+          eduPcmBody:
+            "<p><strong>PCM</strong>（脉冲编码调制）是最常见的数字音频形式：在固定的<strong>采样率</strong>（如 44.1 kHz、48 kHz、96 kHz、192 kHz）下，用<strong>多位元</strong>（16-bit、24-bit 等）记录每个采样点的振幅。录音制作、剪辑、混音、母带以及大多数发行格式（WAV、FLAC、AIFF 等）都以 PCM 或其无损封装为主。</p><p><strong>DSD</strong> 则以<strong>1-bit、极高采样率</strong>的码流刻画波形（常见阶梯如 DSD64／128／256／512），通过超高频密度与<strong>噪声整形</strong>把量化噪声推向听觉敏感带以外。文件多为 DSF、DFF 或封装于镜像／专辑数据中；播放时常涉及特定的滤波或 SDM 路径。</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\"><thead><tr><th scope=\"col\">项目</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>时间与振幅编码</td><td>等间隔采样 + 多位元量化深度</td><td>超高采样率 1-bit 密度变化（噪声整形密切相关）</td></tr><tr><td>后期与生态</td><td>编辑、效果与音量处理成熟，兼容面广</td><td>重度编辑不如 PCM 直观；部分母带与工作流较小众</td></tr><tr><td>DAC 常见情形</td><td>多级滤波与超采样后模拟输出</td><td>支持原生 DSD；也可能内部转为 PCM／多位元再输出</td></tr></tbody></table></div><p class=\"edu-note\"><strong>听感没有固定答案</strong>：同一曲目在不同母带、滤波与模拟前端下表现各异；重要的是<strong>整条播放链</strong>是否协调，而不是单独迷信某一种格式标签。</p>",
+          eduDsdHeading: "什么是 DSD？",
+          eduDsdBody:
+            "<p>DSD（Direct Stream Digital）是一种以<strong>极高采样率的 1-bit 码流</strong>来描述模拟波形的格式；常见标识包括 DSD64（约 2.8224 MHz）、DSD128、DSD256，以及发烧讨论里常见的 <strong>DSD512</strong>。与 PCM「在每个采样点用多位元表示振幅」不同，DSD 通过<strong>超高频的密度变化</strong>承载音频，并倾向于把量化噪声推向音乐带宽之外的频段（概念上接近噪声整形）。</p><p>在实际播放中，即便文件标注为 DSD，链路仍可能经历<strong>数字滤波、转换或重新调制</strong>；最终送入 DAC 芯片的数据流，未必与标签完全一致。这也是玩家会细究 HQPlayer、插值滤波器与 SDM／Δ-Σ 路径的原因——它们影响<strong>阻带抑制、相位特性与噪声谱形状</strong>。</p>",
+          eduUpsHeading: "为什么要升频？",
+          eduUpsBody:
+            "<p><strong>升频（Upsampling）</strong>会把较低的采样率推算到更高的目标速率（例如追求更高倍率的 DSD）。它的核心价值并不是「凭空创造录音里没有的细节」，而是为<strong>数字滤波与噪声整形</strong>提供更宽裕的条件：过渡带可以设计得更干净，量化噪声更容易被推离听觉敏感区。</p><p>但升频越高，通常也意味着<strong>CPU／内存占用、延迟与功耗</strong>同步上升；滤波越精密，对时钟与缓冲也越挑剔。建议先保证播放<strong>稳定不卡顿</strong>，再逐步提高目标速率或更换更高阶算法。</p><ul class=\"edu-list\"><li>若出现爆音、卡顿或缓冲警告：降低目标速率，或改用较轻的滤波／SDM。</li><li>若系统仍有裕量：再尝试更高的 DSD 倍率与更完整的整形流程。</li><li>最终听感仍受<strong>房间声学、模拟前端、耳机／音箱与摆位</strong>共同限制——数字处理只是其中一环。</li></ul>",
+          footerCopy: "音响工程师的数字工具箱 © 2024",
+          footerNote: "参考工具 · 与 HQPLAYER 无关联"
+        },
+        "zh-TW": {
+          htmlLang: "zh-Hant",
+          docTitle: "發燒友知識科普 · PCM、DSD 與升頻",
+          langLabel: "語言",
+          navBrandText: "Hi-End Lab",
+          navTools: "計算工具",
+          navKnowledge: "知識科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "線材",
+          navHq: "濾波表",
+          navDb: "分貝",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "發燒友知識科普",
+          subtitle: "PCM · DSD · 升頻 · 播放鏈",
+          eduLead:
+            "以下說明 PCM 與 DSD 的差異、播放鏈裡 DSD 的角色，以及升頻的意義。（科普用途，非取代原廠規格或實驗室量測流程。）",
+          eduPcmHeading: "PCM 與 DSD 有什麼不同？",
+          eduPcmBody:
+            "<p><strong>PCM</strong>（Pulse Code Modulation，脈衝編碼調變）是最普遍的數位音訊形式：在固定的<strong>取樣頻率</strong>（如 44.1 kHz、48 kHz、96 kHz、192 kHz）下，於每個取樣瞬間以<strong>多位元</strong>（16-bit、24-bit 等）記錄振幅。製作、剪輯、混音、母帶與大多數發行格式（WAV、FLAC、AIFF 等）都以 PCM 或其無損封裝為中心。</p><p><strong>DSD</strong> 則以<strong>1-bit、極高取樣率</strong>的連續位元流逼近波形（常見階梯為 DSD64／128／256／512），藉由超高頻密度與<strong>噪聲整形</strong>把量化雜訊推向聽覺敏感帶之外。檔案可能為 DSF、DFF 或封裝於 ISO／專輯資料；播放端常需特定軟體、濾波或 SDM 設定。</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\"><thead><tr><th scope=\"col\">項目</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>時間／振幅描述</td><td>固定間隔取樣 + 多位元量化深度</td><td>極高取樣率 1-bit 密度變化（與噪聲整形密切相關）</td></tr><tr><td>後製與相容性</td><td>編輯、音量與效果工具成熟，交換格式普及</td><td>重度編輯較不直覺；部分母帶路線較小眾</td></tr><tr><td>DAC 端常見情況</td><td>數位濾波、超取樣後進入類比段</td><td>支援原生 DSD；亦可能內部先轉 PCM／多位元再輸出</td></tr></tbody></table></div><p class=\"edu-note\"><strong>聽感並無標準答案</strong>：同一錄音在不同母帶、濾波與類比前端下表現各異；重點是<strong>整條播放鏈</strong>是否協調，而非單憑「PCM 或 DSD 哪個較發燒」。</p>",
+          eduDsdHeading: "什麼是 DSD？",
+          eduDsdBody:
+            "<p>DSD（Direct Stream Digital）是以<strong>極高取樣率的 1-bit 位元流</strong>來描述類比波形的一種格式；常見代號如 DSD64（約 2.8224 MHz）、DSD128、DSD256，以至發燒討論中常見的 <strong>DSD512</strong>。與 PCM「在每個取樣點用多位元表示振幅」不同，DSD 透過<strong>超高頻的密度變化</strong>承載音訊，並將量化雜訊推向音樂帶寬之外的頻段（概念上類似噪聲整形）。</p><p>在實務層面，即便檔案標示為 DSD，播放過程仍可能經過<strong>數位濾波、轉換或重新調製</strong>；真正送入 DAC 晶片的資料流，未必與檔案標籤一模一樣。這也是許多玩家會細究 HQPlayer、濾波器（interpolation filter）與 SDM／Δ-Σ 設定的原因——它們決定了<strong>阻帶抑制、相位特性與噪訊形狀</strong>。</p>",
+          eduUpsHeading: "為什麼要升頻？",
+          eduUpsBody:
+            "<p><strong>升頻（Upsampling）</strong>是把較低的取樣率推算到更高的目標速率（例如追求更高倍率的 DSD）。它的核心價值並不是「憑空創造錄音室裡沒有的細節」，而是為<strong>數位濾波與噪音整形</strong>提供更寬裕的運算條件：過渡帶可以設計得更乾淨，量化噪訊更容易被推離聽覺敏感區。</p><p>然而升頻越高，通常代表<strong>CPU／記憶體負載、延遲與功耗</strong>同步上升；濾波越精密，對時鐘與緩衝設定也越挑剔。建議先確保播放<strong>穩定不卡頓</strong>，再逐步提高目標速率或換用較高階演算法。</p><ul class=\"edu-list\"><li>若出現爆音、卡頓或緩衝警告：降低目標速率，或改用較輕量的濾波／SDM。</li><li>若系統餘裕充足：再嘗試更高的 DSD 倍率與更完整的整形流程。</li><li>最終聽感仍受<strong>空間聲學、類比前端、耳機／喇叭與擺位</strong>共同限制——數位端只是一個環節。</li></ul>",
+          footerCopy: "音響工程師的數位工具箱 © 2024",
+          footerNote: "參考工具 · 與 HQPLAYER 無商業關聯"
+        },
+        ru: {
+          htmlLang: "ru",
+          docTitle: "Мини-курс для аудиофилов · PCM, DSD и апсемплинг",
+          langLabel: "Язык",
+          navBrandText: "Hi-End Lab",
+          navTools: "Инструменты",
+          navKnowledge: "Обзор",
+          navRoon: "roon",
+          navDamping: "Демпф.",
+          navCable: "Кабель",
+          navHq: "Фильтры",
+          navDb: "дБ",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Мини-курс для аудиофилов",
+          subtitle: "PCM · DSD · Апсемплинг · Цепочка воспроизведения",
+          eduLead:
+            "Кратко о различии PCM и DSD, о том, что означает DSD в цепочке воспроизведения, и зачем нужен апсемплинг — только для обучения; не заменяет спецификации производителей и лабораторные методики.",
+          eduPcmHeading: "PCM и DSD — ключевые отличия",
+          eduPcmBody:
+            "<p><strong>PCM</strong> (импульсно-кодовая модуляция) — основной формат цифрового аудио: при фиксированной <strong>частоте дискретизации</strong> (44,1; 48; 96; 192 кГц и т. д.) каждый отсчёт хранится как <strong>многоразрядное слово</strong> (16/24/32 бит). Продакшн, монтаж и большинство форматов (WAV, FLAC, AIFF) строятся вокруг PCM.</p><p><strong>DSD</strong> — это <strong>1-битный поток на очень высокой частоте</strong> (например ~2,8224 МГц для DSD64, затем ×2/×4/×8). Информация передаётся плотностью переключений; шум квантования обычно <strong>noise-shaped</strong> за пределы слышимого диапазона. Файлы — DSF/DFF и др.; воспроизведение часто связано с фильтрами и SDM.</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\" dir=\"ltr\"><thead><tr><th scope=\"col\">Аспект</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>Кодирование</td><td>Равномерные отсчёты + разрядность на отсчёт</td><td>Очень высокая частота 1-бит; noise shaping обязателен</td></tr><tr><td>Продакшн</td><td>Зрелые инструменты монтажа/мастеринга</td><td>Сложнее тяжёлое редактирование; отдельные мастеринг-трассы</td></tr><tr><td>DAC</td><td>Часто фильтрация к аналогу</td><td>Нативный DSD или внутреннее преобразование в PCM — зависит от чипа</td></tr></tbody></table></div><p class=\"edu-note\"><strong>Нет универсального «лучше звучит»</strong>: всё зависит от мастера, фильтров, часов и всей аналоговой цепи.</p>",
+          eduDsdHeading: "Что такое DSD?",
+          eduDsdBody:
+            "<p><strong>DSD</strong> описывает форму сигнала <strong>1-битным потоком на очень высокой частоте</strong>. Часто упоминают DSD64 (~2,8224 МГц), DSD128, DSD256 и <strong>DSD512</strong>. В отличие от PCM, где у каждого отсчёта многоразрядная амплитуда, в DSD информация — в <strong>ультравысокочастотной плотности переключений</strong>, шум уводится из слышимой полосы.</p><p>Даже «DSD-файлы» могут проходить <strong>цифровую фильтрацию, конверсию или передискретизацию</strong> до ЦАП; поток в чип может не совпадать с надписью на коробке — отсюда настройки HQPlayer: фильтры интерполяции и SDM/Δ‑Σ влияют на <strong>подавление в стоп-полосе, фазу и спектр шума</strong>.</p>",
+          eduUpsHeading: "Зачем апсемплинг?",
+          eduUpsBody:
+            "<p><strong>Апсемплинг</strong> повышает более низкую частоту дискретизации до более высокой цели (например к большему кратному DSD). Цель — не «дорисовать» то, чего не было в студии, а дать <strong>цифровым фильтрам и noise shaping</strong> запас по вычислениям: можно сузить переходные полосы и отодвинуть шум квантования от чувствительных участков слуха.</p><p>Выше цель — обычно выше <strong>нагрузка на CPU/RAM, задержка и энергопотребление</strong>; сложные фильтры требуют стабильных буферов и часов. Начинайте с <strong>воспроизведения без дропаутов</strong>, затем повышайте частоту или «тяжесть» алгоритма.</p><ul class=\"edu-list\"><li>Дропауты или предупреждения буфера — снизьте целевую частоту или возьмите более лёгкие фильтры/SDM.</li><li>Есть запас CPU — пробуйте более высокие кратные DSD.</li><li>Впечатление всё равно зависит от <strong>акустики помещения, аналога, АС и расстановки</strong>.</li></ul>",
+          footerCopy: "Цифровой набор инженера по звуку © 2024",
+          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER"
+        },
+        de: {
+          htmlLang: "de",
+          docTitle: "Audiophilen-Grundlagen · PCM, DSD & Upsampling",
+          langLabel: "Sprache",
+          navBrandText: "Hi-End Lab",
+          navTools: "Werkzeuge",
+          navKnowledge: "Grundlagen",
+          navRoon: "roon",
+          navDamping: "Dämpfung",
+          navCable: "Kabel",
+          navHq: "Filter",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Audiophilen-Grundlagen",
+          subtitle: "PCM · DSD · Upsampling · Wiedergabekette",
+          eduLead:
+            "Kurzüberblick PCM vs. DSD, was DSD in der Kette bedeutet und warum Upsampling zählt — nur zu Bildungszwecken; kein Ersatz für Herstellerangaben oder Messverfahren.",
+          eduPcmHeading: "PCM vs. DSD — Hauptunterschiede",
+          eduPcmBody:
+            "<p><strong>PCM</strong> (Puls-Code-Modulation) ist das dominante digitale Audioformat: bei fester <strong>Abtastrate</strong> (z. B. 44,1; 48; 96; 192 kHz) wird jedes Zeitquant als <strong>Mehrbit-Wort</strong> (16/24/32 Bit) für die Amplitude gespeichert. Produktion, Schnitt und die meisten Vertriebsformate (WAV, FLAC, AIFF) basieren auf PCM.</p><p><strong>DSD</strong> nutzt einen <strong>1-Bit-Datenstrom mit sehr hoher Abtastrate</strong> (z. B. ~2,8224 MHz bei DSD64, dann ×2/×4/×8). Information steckt in ultrahoher Schaltdichte; Quantisierungsrauschen wird typischerweise per <strong>Noise Shaping</strong> aus dem Hörbereich geschoben. Dateien z. B. als DSF/DFF — die Wiedergabe verlangt oft spezielle Filter- oder SDM-Pfade.</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\" dir=\"ltr\"><thead><tr><th scope=\"col\">Aspekt</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>Codierung</td><td>Gleichmäßige Samples + Bittiefe pro Sample</td><td>Sehr hohe Rate, 1 Bit; Noise Shaping zentral</td></tr><tr><td>Workflow</td><td>Reife Tools für Schnitt/Master; universeller Austausch</td><td>Schwere Bearbeitung oft unbequemer; Nischen-Mastering</td></tr><tr><td>DAC-Pfad</td><td>Oft Filterung Richtung Analog</td><td>Nativ-DSD oder interne Umsetzung nach PCM — chipabhängig</td></tr></tbody></table></div><p class=\"edu-note\"><strong>Kein pauschales „klingt besser“</strong>: Es kommt auf Master, Filter, Clocking und die gesamte analoge Kette an.</p>",
+          eduDsdHeading: "Was ist DSD?",
+          eduDsdBody:
+            "<p><strong>DSD</strong> beschreibt Wellenformen mit einem <strong>1-Bit-Strom sehr hoher Abtastrate</strong>. Übliche Stufen: DSD64 (~2,8224 MHz), DSD128, DSD256 und das enthusiastische <strong>DSD512</strong>. Anders als PCM mit Mehrbit-Amplituden pro Sample trägt DSD Information in <strong>ultrahoher Schaltdichte</strong>; Rauschen wird aus dem Hörbereich geschoben.</p><p>Selbst „DSD-Dateien“ können vor dem DAC noch <strong>digital gefiltert, konvertiert oder neu moduliert</strong> werden — was im Chip ankommt, muss nicht der Verpackungsaufdruck sein. Daher die Detailarbeit in HQPlayer: Interpolationsfilter und SDM/Δ‑Σ beeinflussen <strong>Sperrdämpfung, Phasenverhalten und Rauschspektrum</strong>.</p>",
+          eduUpsHeading: "Warum Upsampling?",
+          eduUpsBody:
+            "<p><strong>Upsampling</strong> hebt eine niedrigere Abtastrate auf ein höheres Ziel (z. B. höheres DSD-K multiples). Ziel ist nicht, Studio-Details zu erfinden, sondern <strong>digitalen Filtern und Noise Shaping</strong> mehr Rechenraum zu geben: Übergangsbänder können schärfer werden, Quantisierungsrauschen weiter vom Hörbereich weggeschoben.</p><p>Höhere Ziele erhöhen meist <strong>CPU-/Speicherlast, Latenz und Leistung</strong>; anspruchsvolle Filter verlangen stabile Puffer und Takte. Starten Sie mit <strong>dropout-freier Wiedergabe</strong>, dann schrittweise höhere Rate oder schwerere Algorithmen.</p><ul class=\"edu-list\"><li>Dropouts oder Pufferwarnungen: Zielrate senken oder leichtere Filter/SDM.</li><li>CPU-Reserve vorhanden: höhere DSD-Vielfache mit vollständigeren Ketten probieren.</li><li>Hörergebnis hängt weiter von <strong>Raumakustik, Analogteil, Wandlern und Aufstellung</strong> ab.</li></ul>",
+          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
+          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER"
+        },
+        ar: {
+          htmlLang: "ar",
+          docTitle: "مقدّمة للهواة · PCM وDSD والترقية",
+          langLabel: "اللغة",
+          navBrandText: "Hi-End Lab",
+          navTools: "الأدوات",
+          navKnowledge: "مقدّمة",
+          navRoon: "roon",
+          navDamping: "التخميد",
+          navCable: "الكابلات",
+          navHq: "المرشحات",
+          navDb: "ديسيبل",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "مقدّمة صوتية للهواة",
+          subtitle: "PCM · DSD · الترقية · سلسلة التشغيل",
+          eduLead:
+            "مقارنة مفاهيمية بين PCM وDSD، ودور DSD في سلسلة التشغيل، ولماذا تُستخدم ترقية التردد — للتعليم فقط؛ لا تحل محل مواصفات المصنع أو الإجراءات المختبرية.",
+          eduPcmHeading: "PCM مقابل DSD — الفروق الأساسية",
+          eduPcmBody:
+            "<p><strong>PCM</strong> هو تمثيل الصوت الرقمي السائد: عند <strong>معدل عينات</strong> ثابت (مثل 44.1 أو 48 أو 96 أو 192 كيلوهرتز) يُخزَّن كل لحظة ككلمة <strong>متعددة البتات</strong> (16/24/32 بت) للسعة. الإنتاج والتحرير ومعظم التوزيع (WAV، FLAC، AIFF) يدور حول PCM.</p><p><strong>DSD</strong> يستخدم <strong>تيار بت واحد بمعدل عينات عالٍ جدًا</strong> (نحو 2.8224 ميجاهرتز لـ DSD64 ثم مضاعفات أعلى). تُنقل المعلومات بكثافة تبديل فوق الحسم؛ يُشكَّل ضجيج التكميم خارج النطاق السمعي غالبًا. قد تكون الملفات DSF/DFF؛ غالبًا تدخل مرشحات أو مسارات SDM.</p><div class=\"edu-table-wrap\"><table class=\"edu-compare\" dir=\"rtl\"><thead><tr><th scope=\"col\">الجانب</th><th scope=\"col\">PCM</th><th scope=\"col\">DSD</th></tr></thead><tbody><tr><td>ترميز الزمن/السعة</td><td>عينات منتظمة + عمق بت لكل عينة</td><td>كثافة بت واحد عالٍ؛ تشكيل الضجيج جزء أساسي</td></tr><tr><td>سير العمل</td><td>أدوات تحرير وماسترينغ ناضجة</td><td>تحرير ثقيل أقل ملاءمة؛ مسارات ماسترينغ متخصصة</td></tr><tr><td>مسار DAC</td><td>غالبًا تصفية نحو التماثلي</td><td>DSD أصلي أو تحويل داخلي إلى PCM — يعتمد على الرقاقة</td></tr></tbody></table></div><p class=\"edu-note\"><strong>لا يوجد حكم مطلق «أفضل صوتًا»</strong>: يعتمد الأمر على الماستر والمرشحات والساعة والسلسلة التماثلية.</p>",
+          eduDsdHeading: "ما هو DSD؟",
+          eduDsdBody:
+            "<p><strong>DSD</strong> يمثّل موجات شبيهة بالتماثلي عبر <strong>تيار بت واحد بمعدل عينات عالٍ جدًا</strong>. الشائع: DSD64 (~2.8224 MHz) ثم DSD128 و256 و<strong>DSD512</strong>. بخلاف PCM حيث تُخزَّن السعة متعددة البت لكل عينة، يحمل DSD المعلومات بـ<strong>كثافة تبديل فوق الحسم</strong> بينما يُدفع ضجيج التكميم خارج النطاق السمعي غالبًا.</p><p>حتى ملفات «DSD» قد تمرّ بـ<strong>ترشيح رقمي أو تحويل أو إعادة تضمين</strong> قبل DAC؛ ما يدخل المحوّل قد يختلف عن الملصق. لذلك تهم إعدادات HQPlayer والمرشحات ومسارات SDM/Δ‑Σ لـ<strong>رفض النطاق الموقوف والطور وطيف الضجيج</strong>.</p>",
+          eduUpsHeading: "لماذا الترقية (Upsampling)؟",
+          eduUpsBody:
+            "<p><strong>Upsampling</strong> يرفع معدل عينات أقل نحو هدف أعلى (مثل مضاعف DSD أعلى). الهدف ليس اختلاق تفاصيل غير موجودة، بل إعطاء <strong>المرشحات الرقمية وتشكيل الضجيج</strong> هامش حساب أوسع: يمكن شد أحزمة الانتقال ودفع ضجيج التكميم أبعد عن المناطق الحساسة للسمع.</p><p>الأهداف الأعلى عادة ترفع <strong>حمل المعالج والذاكرة والزمن والاستطاعة</strong>؛ المرشحات الدقيقة تتطلب مخازن مؤقتة وساعة منضبطة. ابدأ من <strong>تشغيل بلا انقطاع</strong> ثم زِد المعدل أو ثقل الخوارزمية تدريجيًا.</p><ul class=\"edu-list\"><li>عند تقطيع أو تحذيرات المخزن: خفّض المعدل الهدف أو مرشحات/SDM أخف.</li><li>إن وُجد رصيد معالج: جرّب مضاعفات DSD أعلى.</li><li>ما يزال الإدراك يعتمد على <strong>الصوتيات الغرفية والتماثل والمحركات والمواضع</strong>.</li></ul>",
+          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
+          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER"
+        }
+
+      };
+
+      function getStrings(lang) {
+        return STRINGS[lang] || STRINGS[DEFAULT_LANG];
+      }
+
+      function setBodyLangClass(lang) {
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW", "lang-de", "lang-ru", "lang-ar");
+        document.body.classList.add("lang-" + lang);
+      }
+
+      var langSelect = document.getElementById("lang-select");
+
+      function applyLocale(lang) {
+        if (!STRINGS[lang]) lang = DEFAULT_LANG;
+        setBodyLangClass(lang);
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        var L = getStrings(lang);
+        document.documentElement.lang = L.htmlLang;
+        document.title = L.docTitle;
+
+        document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-link-tools").textContent = L.navTools;
+        document.getElementById("nav-damping").textContent = L.navDamping;
+        document.getElementById("nav-cable").textContent = L.navCable;
+        document.getElementById("nav-hq").textContent = L.navHq;
+        document.getElementById("nav-db").textContent = L.navDb;
+        document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
+        document.getElementById("nav-roon").textContent = L.navRoon;
+
+        document.getElementById("i18n-lang-label").textContent = L.langLabel;
+        document.getElementById("i18n-brand").textContent = L.brandLine;
+        document.getElementById("i18n-page-title").textContent = L.pageTitle;
+        document.getElementById("i18n-subtitle").textContent = L.subtitle;
+        document.getElementById("edu-lead").textContent = L.eduLead;
+        document.getElementById("edu-pcm-heading").textContent = L.eduPcmHeading;
+        document.getElementById("edu-pcm-body").innerHTML = L.eduPcmBody;
+        document.getElementById("edu-dsd-heading").textContent = L.eduDsdHeading;
+        document.getElementById("edu-dsd-body").innerHTML = L.eduDsdBody;
+        document.getElementById("edu-ups-heading").textContent = L.eduUpsHeading;
+        document.getElementById("edu-ups-body").innerHTML = L.eduUpsBody;
+
+        document.getElementById("i18n-footer-copy").textContent = L.footerCopy;
+        document.getElementById("i18n-footer-note").textContent = L.footerNote;
+
+        langSelect.value = lang;
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+      }
+
+      langSelect.addEventListener("change", function () {
+        applyLocale(langSelect.value);
+      });
+
+      var initial = DEFAULT_LANG;
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && STRINGS[saved]) initial = saved;
+      } catch (e) {}
+      applyLocale(initial);
+    })();
+  </script>
+</body>
+</html>

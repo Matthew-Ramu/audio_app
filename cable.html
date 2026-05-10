@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="hiend-common.css" />
+</head>
+<body class="lang-zh-TW">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="site-nav-inner">
+      <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
+      <div class="nav-links">
+        <a href="index.html#section-tools" id="nav-link-tools"></a>
+        <a href="damping.html" id="nav-damping"></a>
+        <a href="cable.html" id="nav-cable" class="is-current" aria-current="page"></a>
+        <a href="hq-filters.html" id="nav-hq"></a>
+        <a href="db.html" id="nav-db"></a>
+        <a href="knowledge.html" id="nav-link-knowledge"></a>
+        <a href="roon.html" id="nav-roon"></a>
+      </div>
+      <div class="nav-actions">
+        <label for="lang-select" id="i18n-lang-label"></label>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="de">Deutsch</option>
+          <option value="ru">Русский</option>
+          <option value="ar">العربية</option>
+          <option value="ja">日本語</option>
+          <option value="zh-CN">中文（简体）</option>
+          <option value="zh-TW">中文（繁體）</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="page-section page-hero" id="top">
+      <div class="brand-line" id="i18n-brand"></div>
+      <h1 id="i18n-page-title"></h1>
+    </header>
+
+    <section class="panel tool-single page-section" aria-labelledby="i18n-page-title">
+      <p class="hint" id="cable-hint"></p>
+      <div class="calc-two-col">
+        <div class="field">
+          <label for="cable-length" id="i18n-cable-len-label"></label>
+          <input type="number" id="cable-length" min="0" step="0.5" value="15" inputmode="decimal" />
+        </div>
+        <div class="field">
+          <label for="cable-preset" id="i18n-cable-preset-label"></label>
+          <select id="cable-preset">
+            <option value="0.12">—</option>
+            <option value="0.08">—</option>
+            <option value="0.04">—</option>
+          </select>
+        </div>
+      </div>
+      <label for="cable-load-z" id="i18n-cable-load-label"></label>
+      <input type="number" id="cable-load-z" min="1" step="100" value="47000" inputmode="numeric" />
+      <p class="hint" id="cable-model-hint"></p>
+      <button type="button" class="btn-3d" id="btn-cable"></button>
+      <div id="cable-result" class="result-block" hidden>
+        <div class="result-value" id="cable-value"></div>
+        <p class="result-note" id="cable-note"></p>
+      </div>
+    </section>
+    <footer class="site-footer">
+      <p class="footer-copy" id="i18n-footer-copy"></p>
+      <p class="footer-note" id="i18n-footer-note"></p>
+    </footer>
+  </div>
+  <script>
+    (function () {
+
+      var STORAGE_KEY = "hiend-audio-calc-lang";
+      var DEFAULT_LANG = "zh-TW";
+            var STRINGS = {
+        en: {
+          htmlLang: "en",
+          docTitle: "Cable level loss estimate · Hi-End Lab",
+          langLabel: "Language",
+          navBrandText: "Hi-End Lab",
+          navTools: "Tools",
+          navKnowledge: "Primer",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "Cable",
+          navHq: "Filters",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
+          footerNote: "REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER",
+          cableTitle: "Cable length — level loss (estimate)",
+          cableHint: "Rough resistive model for line‑level runs: useful sanity‑check for long balanced snakes; not a transmission‑line simulation.",
+          cableLenLabel: "Cable length (m)",
+          cablePresetLabel: "Copper pair ≈ Ω per conductor / m",
+          cablePresetHeavy: "~0.12 Ω/m · thinner / long runs",
+          cablePresetMid: "~0.08 Ω/m · typical mic/studio cable",
+          cablePresetLight: "~0.04 Ω/m · heavier gauge / short",
+          cableLoadLabel: "Downstream load Z (Ω)",
+          cableModelHint: "Series model: R<sub>cable</sub> ≈ 2 × length × Ω/m (go + return). Loss<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>load</sub> / (Z<sub>load</sub> + R<sub>cable</sub>)).",
+          btnCable: "Estimate attenuation",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "≈ <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · V ratio <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>cable</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain: "At high Z<sub>load</sub> (typical line inputs) absolute loss is usually small unless cable is very long and thin. Use AWG tables for serious installs.",
+          errCable: "Enter length ≥ 0, valid Ω/m preset, and load > 0.",
+        },
+        ja: {
+          htmlLang: "ja",
+          docTitle: "ケーブル・レベル低下（概算） · Hi-End Lab",
+          langLabel: "表示言語",
+          navBrandText: "Hi-End Lab",
+          navTools: "ツール",
+          navKnowledge: "解説",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "ケーブル",
+          navHq: "フィルタ",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
+          footerNote: "参考ツール · HQPLAYER 非関連",
+          cableTitle: "ケーブル長とレベル低下（概算）",
+          cableHint: "ラインレベル長距離配線の抵抗モデル（参考）。伝送線シミュレーションではありません。",
+          cableLenLabel: "ケーブル長（m）",
+          cablePresetLabel: "導体あたりの概算 Ω／m",
+          cablePresetHeavy: "約 0.12 Ω/m · 細め／長め",
+          cablePresetMid: "約 0.08 Ω/m · 一般的マイク線級",
+          cablePresetLight: "約 0.04 Ω/m · 太め／短め",
+          cableLoadLabel: "負荷インピーダンス Z（Ω）",
+          cableModelHint: "直列モデル：R<sub>cable</sub> ≈ 2 × 長さ × Ω/m（往復）。損失（dB）= 20·log<sub>10</sub>(Z/(Z+R<sub>cable</sub>))。",
+          btnCable: "減衰を見積もる",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "約 <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · 電圧比 <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>cable</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain: "ラインレベルで負荷が高い場合、抵抗が極端でなければ損失は小さいことが多いです。",
+          errCable: "長さ・プリセット・負荷を確認してください。",
+        },
+        "zh-CN": {
+          htmlLang: "zh-Hans",
+          docTitle: "线材电平损耗估算 · Hi-End Lab",
+          langLabel: "语言",
+          navBrandText: "Hi-End Lab",
+          navTools: "计算工具",
+          navKnowledge: "知识科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "线材",
+          navHq: "滤波表",
+          navDb: "分贝",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音响工程师的数字工具箱 © 2024",
+          footerNote: "参考工具 · 与 HQPLAYER 无关联",
+          cableTitle: "线材长度 · 电平损耗估算",
+          cableHint: "面向线路级长距离传输的简化电阻模型，用于粗估压降；非传输线仿真。",
+          cableLenLabel: "线材长度（m）",
+          cablePresetLabel: "铜芯约 Ω／每米（单根导体）",
+          cablePresetHeavy: "约 0.12 Ω/m · 较细／长线",
+          cablePresetMid: "约 0.08 Ω/m · 常见工程线缆",
+          cablePresetLight: "约 0.04 Ω/m · 较粗／短线",
+          cableLoadLabel: "下一级负载阻抗 Z（Ω）",
+          cableModelHint: "串联近似：R<sub>线</sub> ≈ 2 × 长度 × Ω/m（往返）。损耗 dB = 20·log<sub>10</sub>(Z/(Z+R<sub>线</sub>))。",
+          btnCable: "估算衰减",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "约 <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · 电压比 <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>线</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain: "线路输入阻抗很高时，除非线极长且细，绝对损耗通常很小。工程布线请查 AWG 表。",
+          errCable: "请检查长度、线型与负载是否为正。",
+        },
+        "zh-TW": {
+          htmlLang: "zh-Hant",
+          docTitle: "線材電平損耗估算 · Hi-End Lab",
+          langLabel: "語言",
+          navBrandText: "Hi-End Lab",
+          navTools: "計算工具",
+          navKnowledge: "知識科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "線材",
+          navHq: "濾波表",
+          navDb: "分貝",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "音響工程師的數位工具箱 © 2024",
+          footerNote: "參考工具 · 與 HQPLAYER 無商業關聯",
+          cableTitle: "線材長度 · 電平損耗估算",
+          cableHint: "面向線路級長距離佈線的簡化電阻模型，粗估衰減；非傳輸線模擬。",
+          cableLenLabel: "線材長度（m）",
+          cablePresetLabel: "銅導體約 Ω／每米（單芯）",
+          cablePresetHeavy: "約 0.12 Ω/m · 較細／長距離",
+          cablePresetMid: "約 0.08 Ω/m · 常見工程線材",
+          cablePresetLight: "約 0.04 Ω/m · 較粗／短距離",
+          cableLoadLabel: "後級負載阻抗 Z（Ω）",
+          cableModelHint: "串聯近似：R<sub>線</sub> ≈ 2 × 長度 × Ω/m（往返）。損耗 dB = 20·log<sub>10</sub>(Z/(Z+R<sub>線</sub>))。",
+          btnCable: "估算衰減",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "約 <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · 電壓比 <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>線</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain: "線路輸入阻抗偏高時，除非線材極長且細，絕對損耗通常很小。正式工程請依 AWG 表選線。",
+          errCable: "請確認長度、線材類型與負載為正。",
+        },
+
+        ru: {
+          htmlLang: "ru",
+          docTitle: "Длина кабеля — потери уровня · Hi-End Lab",
+          langLabel: "Язык",
+          navBrandText: "Hi-End Lab",
+          navTools: "Инструменты",
+          navKnowledge: "Обзор",
+          navRoon: "roon",
+          navDamping: "Демпф.",
+          navCable: "Кабель",
+          navHq: "Фильтры",
+          navDb: "дБ",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Цифровой набор инженера по звуку © 2024",
+          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER",
+          cableTitle: "Длина кабеля — потери уровня (оценка)",
+          cableHint:
+            "Упрощённая резистивная модель линейного уровня для длинных линий; не модель линии передачи.",
+          cableLenLabel: "Длина кабеля (м)",
+          cablePresetLabel: "Медь ≈ Ω на проводник / м",
+          cablePresetHeavy: "~0,12 Ω/м · тонкий / длинный",
+          cablePresetMid: "~0,08 Ω/м · студийный типовой",
+          cablePresetLight: "~0,04 Ω/м · толще / короче",
+          cableLoadLabel: "Импеданс нагрузки Z (Ω)",
+          cableModelHint:
+            "Последовательная модель: R<sub>каб</sub> ≈ 2 × длина × Ω/м (туда-обратно). Потери<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>н</sub> / (Z<sub>н</sub> + R<sub>каб</sub>)).",
+          btnCable: "Оценить затухание",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "≈ <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> дБ · отн. напряжения <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>каб</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain:
+            "При высоком Z<sub>н</sub> (типичный линейный вход) абсолютные потери малы, если кабель не очень длинный и тонкий. Для инсталляций сверяйтесь с таблицами AWG.",
+          errCable: "Укажите длину ≥ 0, корректный пресет Ω/м и нагрузку > 0."
+        },
+        de: {
+          htmlLang: "de",
+          docTitle: "Kabellänge — Pegelabfall · Hi-End Lab",
+          langLabel: "Sprache",
+          navBrandText: "Hi-End Lab",
+          navTools: "Werkzeuge",
+          navKnowledge: "Grundlagen",
+          navRoon: "roon",
+          navDamping: "Dämpfung",
+          navCable: "Kabel",
+          navHq: "Filter",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
+          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER",
+          cableTitle: "Kabellänge — Pegelabfall (Schätzung)",
+          cableHint:
+            "Grobes ohmsches Modell für Line-Pegel auf langen Streifen; keine Leitungswellen-Simulation.",
+          cableLenLabel: "Kabellänge (m)",
+          cablePresetLabel: "Kupfer ≈ Ω pro Leiter / m",
+          cablePresetHeavy: "~0,12 Ω/m · dünn / lang",
+          cablePresetMid: "~0,08 Ω/m · typisches Studio-Mikrofonkabel",
+          cablePresetLight: "~0,04 Ω/m · dicker / kurz",
+          cableLoadLabel: "Lastimpedanz nachgeschaltet Z (Ω)",
+          cableModelHint:
+            "Reihenmodell: R<sub>Kabel</sub> ≈ 2 × Länge × Ω/m (Hin und Rück). Verlust<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>Last</sub> / (Z<sub>Last</sub> + R<sub>Kabel</sub>)).",
+          btnCable: "Dämpfung schätzen",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "≈ <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · Spannungsverhältnis <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>Kabel</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain:
+            "Bei hohem Z<sub>Last</sub> (typische Line-Eingänge) sind absolute Verluste meist klein, außer Kabel ist sehr lang und dünn. Für Installationen AWG-Tabellen nutzen.",
+          errCable: "Länge ≥ 0, gültiges Ω/m-Preset und Last > 0 angeben."
+        },
+        ar: {
+          htmlLang: "ar",
+          docTitle: "طول الكابلة — فقدان المستوى · Hi-End Lab",
+          langLabel: "اللغة",
+          navBrandText: "Hi-End Lab",
+          navTools: "الأدوات",
+          navKnowledge: "مقدّمة",
+          navRoon: "roon",
+          navDamping: "التخميد",
+          navCable: "الكابلات",
+          navHq: "المرشحات",
+          navDb: "ديسيبل",
+          brandLine: "Hi-End Digital Audio Lab",
+          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
+          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER",
+          cableTitle: "طول الكابلة — فقدان المستوى (تقدير)",
+          cableHint:
+            "نموذج مقاومي مبسّط لخطوط المستوى الطويلة؛ وليس محاكاة خط نقل.",
+          cableLenLabel: "طول الكابلة (م)",
+          cablePresetLabel: "نحاس ≈ Ω لكل موصل / م",
+          cablePresetHeavy: "~0.12 Ω/m · أرفع / أطول",
+          cablePresetMid: "~0.08 Ω/m · كابل استوديو نموذجي",
+          cablePresetLight: "~0.04 Ω/m · أسمن / أقصر",
+          cableLoadLabel: "معاوقة الحمل Z (Ω)",
+          cableModelHint:
+            "نموذج تسلسلي: R<sub>سلك</sub> ≈ 2 × الطول × Ω/م (ذهاب وإياب). الخسارة<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>حمل</sub> / (Z<sub>حمل</sub> + R<sub>سلك</sub>)).",
+          btnCable: "قدّر الإضعاف",
+          cableResultHtml: function (lossDb, ratioV, rWire) {
+            return (
+              "≈ <strong>" +
+              lossDb.toFixed(3) +
+              "</strong> dB · نسبة الجهد <strong>" +
+              ratioV.toFixed(5) +
+              "</strong> · R<sub>سلك</sub> ≈ <strong>" +
+              rWire.toFixed(2) +
+              "</strong> Ω"
+            );
+          },
+          cableResultExplain:
+            "عند Z<sub>حمل</sub> عالٍ (مداخل خطية) يكون الفقد صغيرًا ما لم يكن الكبل طويلًا جدًا ورفيعًا. للتركيبات الجادة استخدم جداول AWG.",
+          errCable: "أدخل طولًا ≥ 0 وقيمة Ω/م صالحة وحملًا > 0."
+        }
+
+      };
+      function getStrings(lang) {
+        return STRINGS[lang] || STRINGS[DEFAULT_LANG];
+      }
+      function setBodyLangClass(lang) {
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW", "lang-de", "lang-ru", "lang-ar");
+        document.body.classList.add("lang-" + lang);
+      }
+      var langSelect = document.getElementById("lang-select");
+      var currentLang = DEFAULT_LANG;
+
+      function applyLocale(lang) {
+        if (!STRINGS[lang]) lang = DEFAULT_LANG;
+        currentLang = lang;
+        setBodyLangClass(lang);
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        var L = getStrings(lang);
+        document.documentElement.lang = L.htmlLang;
+        document.title = L.docTitle;
+        document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-link-tools").textContent = L.navTools;
+        document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
+        document.getElementById("nav-roon").textContent = L.navRoon;
+        document.getElementById("nav-damping").textContent = L.navDamping;
+        document.getElementById("nav-cable").textContent = L.navCable;
+        document.getElementById("nav-hq").textContent = L.navHq;
+        document.getElementById("nav-db").textContent = L.navDb;
+        document.getElementById("i18n-lang-label").textContent = L.langLabel;
+        document.getElementById("i18n-brand").textContent = L.brandLine;
+        document.getElementById("i18n-page-title").textContent = L.cableTitle;
+        document.getElementById("cable-hint").innerHTML = L.cableHint;
+        document.getElementById("i18n-cable-len-label").textContent = L.cableLenLabel;
+        document.getElementById("i18n-cable-preset-label").textContent = L.cablePresetLabel;
+        var cablePresetEl = document.getElementById("cable-preset");
+        cablePresetEl.options[0].text = L.cablePresetHeavy;
+        cablePresetEl.options[1].text = L.cablePresetMid;
+        cablePresetEl.options[2].text = L.cablePresetLight;
+        document.getElementById("i18n-cable-load-label").textContent = L.cableLoadLabel;
+        document.getElementById("cable-model-hint").innerHTML = L.cableModelHint;
+        document.getElementById("btn-cable").textContent = L.btnCable;
+        document.getElementById("i18n-footer-copy").textContent = L.footerCopy;
+        document.getElementById("i18n-footer-note").textContent = L.footerNote;
+        langSelect.value = lang;
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+      }
+
+      document.getElementById("btn-cable").addEventListener("click", function () {
+        var L = getStrings(currentLang);
+        var len = parseFloat(document.getElementById("cable-length").value, 10);
+        var rPerM = parseFloat(document.getElementById("cable-preset").value, 10);
+        var zLoad = parseFloat(document.getElementById("cable-load-z").value, 10);
+        var box = document.getElementById("cable-result");
+        var valEl = document.getElementById("cable-value");
+        var noteEl = document.getElementById("cable-note");
+        if (
+          Number.isNaN(len) ||
+          len < 0 ||
+          Number.isNaN(rPerM) ||
+          rPerM <= 0 ||
+          Number.isNaN(zLoad) ||
+          zLoad <= 0
+        ) {
+          box.hidden = false;
+          valEl.textContent = L.errCable;
+          valEl.style.color = "#c9a962";
+          noteEl.textContent = "";
+          return;
+        }
+        var rWire = 2 * len * rPerM;
+        var ratioV = zLoad / (zLoad + rWire);
+        var lossDb = 20 * Math.log10(ratioV);
+        box.hidden = false;
+        valEl.style.color = "";
+        valEl.innerHTML = L.cableResultHtml(lossDb, ratioV, rWire);
+        noteEl.textContent = L.cableResultExplain;
+      });
+
+      langSelect.addEventListener("change", function () {
+        applyLocale(langSelect.value);
+      });
+
+      var initial = DEFAULT_LANG;
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && STRINGS[saved]) initial = saved;
+      } catch (e) {}
+      applyLocale(initial);
+    })();
+  </script>
+</body>
+</html>
