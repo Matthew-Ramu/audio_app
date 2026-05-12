@@ -33,39 +33,6 @@
       font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
     }
 
-    body.lang-ru {
-      font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
-    }
-
-    body.lang-de {
-      font-family: "Noto Sans", "Segoe UI", system-ui, sans-serif;
-    }
-
-    body.lang-ar {
-      font-family: "Noto Sans Arabic", "Noto Sans", "Segoe UI", sans-serif;
-    }
-
-    html[dir="rtl"] .site-nav-inner {
-      flex-direction: row-reverse;
-    }
-
-    html[dir="rtl"] .nav-links {
-      flex-direction: row-reverse;
-    }
-
-    html[dir="rtl"] .nav-actions {
-      flex-direction: row-reverse;
-    }
-
-    html[dir="rtl"] .hq-table-wrap,
-    html[dir="rtl"] .hq-compare-table {
-      direction: ltr;
-    }
-
-    html[dir="rtl"] .connector-chart {
-      direction: ltr;
-    }
-
     body {
       min-height: 100vh;
       color: var(--text-silver);
@@ -102,8 +69,8 @@
       position: sticky;
       top: 0;
       z-index: 200;
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow-x: visible;
+      overflow-y: visible;
       -webkit-overflow-scrolling: touch;
       border-bottom: 1px solid rgba(201, 169, 98, 0.22);
       background:
@@ -128,10 +95,11 @@
       margin: 0 auto;
       padding: 0.55rem 1rem;
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 0.45rem 0.65rem;
+      row-gap: 0.4rem;
     }
 
     .nav-brand {
@@ -155,17 +123,22 @@
 
     .nav-links {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: center;
       gap: 0.28rem 0.38rem;
-      flex: 1 1 auto;
+      row-gap: 0.32rem;
+      flex: 1 1 220px;
       min-width: 0;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
+      overflow-x: visible;
+      justify-content: flex-start;
     }
 
     .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.05rem;
+      box-sizing: border-box;
       font-size: 0.7rem;
       letter-spacing: 0.06em;
       color: var(--text-muted);
@@ -353,6 +326,12 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
+    /* Open dropdown list only; closed <select> keeps styles above. Support varies by OS/browser. */
+    select option {
+      color: #111;
+      background: #fff;
+    }
+
     select:focus,
     input[type="number"]:focus {
       border-color: rgba(201, 169, 98, 0.5);
@@ -447,6 +426,63 @@
       color: var(--text-muted);
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       padding-top: 0.65rem;
+    }
+
+    .xlr-volt-bars {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .xlr-bar-row + .xlr-bar-row {
+      margin-top: 0.55rem;
+    }
+
+    .xlr-bar-caption {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.28rem;
+    }
+
+    .xlr-bar-caption strong {
+      color: var(--text-silver);
+      font-weight: 600;
+    }
+
+    .xlr-bar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.45);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+    }
+
+    .xlr-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      transition: width 0.35s ease;
+    }
+
+    .xlr-volt-bars > .xlr-bar-row:first-child .xlr-bar-fill {
+      width: 50%;
+      background: linear-gradient(90deg, #4a5f78 0%, #5c6d86 55%, #3d4f63 100%);
+      box-shadow: 0 0 10px rgba(90, 120, 160, 0.25);
+    }
+
+    .xlr-volt-bars > .xlr-bar-row:nth-child(2) .xlr-bar-fill {
+      width: 100%;
+      background: linear-gradient(90deg, #e4d4a8 0%, #c9a962 40%, #7ecf6a 100%);
+      box-shadow: 0 0 14px rgba(201, 169, 98, 0.35);
+    }
+
+    .xlr-progress-hint {
+      margin-top: 0.85rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--text-silver);
+      letter-spacing: 0.02em;
     }
 
     .hint {

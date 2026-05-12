@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roon 串聯 HQPlayer 設定指南</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="hiend-common.css" />
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .guide-hero {
+      text-align: center;
+      padding-bottom: 0.5rem;
+    }
+    .guide-hero h1 {
+      font-family: "Noto Sans TC", "Noto Sans SC", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 3.5vw, 1.65rem);
+      letter-spacing: 0.04em;
+      color: var(--gold-bright);
+      text-shadow: 0 0 28px var(--accent-glow), 0 2px 0 rgba(0, 0, 0, 0.45);
+      line-height: 1.45;
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+    .guide-step {
+      margin-top: 1.75rem;
+    }
+    .guide-step .panel-title {
+      font-size: 1.02rem;
+      margin-bottom: 0.65rem;
+    }
+    .guide-step-body {
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .guide-figure {
+      margin: 0;
+      padding: 0;
+    }
+    .guide-figure img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid rgba(200, 208, 220, 0.42);
+      box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(201, 169, 98, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      cursor: zoom-in;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .guide-figure img:hover {
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(201, 169, 98, 0.28);
+      transform: translateY(-1px);
+    }
+    .guide-img-hint {
+      margin-top: 0.55rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: rgba(154, 160, 174, 0.85);
+      text-align: center;
+    }
+    .guide-lightbox {
+      max-width: min(96vw, 1200px);
+      width: 96vw;
+      padding: 0;
+      border: 1px solid rgba(201, 169, 98, 0.35);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #1e1f22 0%, #121314 100%);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75);
+    }
+    .guide-lightbox::backdrop {
+      background: rgba(6, 7, 9, 0.82);
+      backdrop-filter: blur(6px);
+    }
+    .guide-lightbox-inner {
+      position: relative;
+      padding: 2.5rem 0.75rem 0.75rem;
+    }
+    .guide-lightbox-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid rgba(201, 169, 98, 0.35);
+      border-radius: 6px;
+      background: rgba(30, 31, 34, 0.95);
+      color: var(--gold-bright);
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .guide-lightbox-close:hover {
+      background: rgba(201, 169, 98, 0.12);
+    }
+    .guide-lightbox img {
+      display: block;
+      width: 100%;
+      max-height: min(85vh, 900px);
+      height: auto;
+      object-fit: contain;
+      margin: 0 auto;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="lang-zh-TW">
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="site-nav-inner">
+      <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
+      <div class="nav-links">
+        <a href="roon-hqp-guide.html" class="is-current" id="nav-roon-hqp" aria-current="page"></a>
+        <a href="index.html#section-tools" id="nav-link-tools"></a>
+        <a href="damping.html" id="nav-damping"></a>
+        <a href="cable.html" id="nav-cable"></a>
+        <a href="hq-filters.html" id="nav-hq"></a>
+        <a href="db.html" id="nav-db"></a>
+        <a href="knowledge.html" id="nav-link-knowledge"></a>
+        <a href="roon.html" id="nav-roon"></a>
+      </div>
+      <div class="nav-actions">
+        <label for="lang-select" id="i18n-lang-label"></label>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+          <option value="zh-CN">中文（简体）</option>
+          <option value="zh-TW" selected>中文（繁體）</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="page-section page-hero guide-hero" id="top">
+      <div class="brand-line" id="i18n-brand"></div>
+      <h1 id="i18n-page-title"></h1>
+    </header>
+
+    <section class="panel page-section guide-step" aria-labelledby="step1-title">
+      <h2 class="panel-title" id="step1-title"></h2>
+      <p class="guide-step-body" id="step1-body"></p>
+      <figure class="guide-figure">
+        <img
+          src="images/HQPlayer_connect_step1.png"
+          alt=""
+          id="img-step1"
+          data-full="images/HQPlayer_connect_step1.png"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="guide-img-hint" id="img-hint-1"></figcaption>
+      </figure>
+    </section>
+
+    <section class="panel page-section guide-step" aria-labelledby="step2-title">
+      <h2 class="panel-title" id="step2-title"></h2>
+      <p class="guide-step-body" id="step2-body"></p>
+      <figure class="guide-figure">
+        <img
+          src="images/HQPlayer_connect_step2.png"
+          alt=""
+          id="img-step2"
+          data-full="images/HQPlayer_connect_step2.png"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption class="guide-img-hint" id="img-hint-2"></figcaption>
+      </figure>
+    </section>
+
+    <section class="panel page-section guide-step" aria-labelledby="step3-title">
+      <h2 class="panel-title" id="step3-title"></h2>
+      <p class="guide-step-body" id="step3-body"></p>
+    </section>
+
+    <footer class="site-footer">
+      <p class="footer-copy" id="i18n-footer-copy"></p>
+      <p class="footer-note" id="i18n-footer-note"></p>
+    </footer>
+  </div>
+
+  <dialog id="lightbox" class="guide-lightbox" aria-labelledby="lightbox-title">
+    <div class="guide-lightbox-inner">
+      <h2 class="visually-hidden" id="lightbox-title">Image</h2>
+      <button type="button" class="guide-lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+      <img src="" alt="" id="lightbox-img" />
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      var STORAGE_KEY = "hiend-audio-calc-lang";
+      var DEFAULT_LANG = "zh-TW";
+
+      var STRINGS = {
+        en: {
+          htmlLang: "en",
+          docTitle: "Roon + HQPlayer setup · Hi-End Lab",
+          langLabel: "Language",
+          navBrandText: "Hi-End Lab",
+          navRoonHqp: "Roon + HQPlayer setup",
+          navTools: "Tools",
+          navKnowledge: "Primer",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "Cable",
+          navHq: "Filters",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Roon with HQPlayer: a from-scratch guide to maximum-quality playback setup",
+          step1Title: "Step 1 — Add the HQPlayer control point in Roon",
+          step1Body:
+            "Open Roon <strong>Settings</strong>, switch to the <strong>Setup</strong> tab. Scroll to the <strong>HQPlayer</strong> section and click <strong>Add HQPlayer</strong> on the right.",
+          step2Title: "Step 2 — Network path and authentication",
+          step2Body:
+            "In the window on the right, select <strong>HQPlayer</strong>. After that, when you pick a playback device, HQPlayer will appear in the list.",
+          step3Title: "Step 3 — Finish and switch the Zone",
+          step3Body:
+            "After tapping <strong>Add</strong>, return to the main Roon playback screen. In the bottom-right <strong>Zone</strong> picker, switch to the HQPlayer you just added. You have now enabled a top-tier digital playback chain.",
+          imgTapHint: "Tap or click the image to view full size",
+          imgAlt1: "Roon Settings → Setup: HQPlayer section with Add HQPlayer",
+          imgAlt2: "HQPlayer selection in the add-device dialog",
+          lightboxClose: "Close",
+          footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
+          footerNote: "EDUCATIONAL GUIDE · NOT AFFILIATED WITH ROON OR HQPLAYER"
+        },
+        ja: {
+          htmlLang: "ja",
+          docTitle: "Roon＋HQPlayer 設定ガイド · Hi-End Lab",
+          langLabel: "表示言語",
+          navBrandText: "Hi-End Lab",
+          navRoonHqp: "Roon＋HQPlayer 設定",
+          navTools: "ツール",
+          navKnowledge: "解説",
+          navRoon: "roon",
+          navDamping: "DF",
+          navCable: "ケーブル",
+          navHq: "フィルタ",
+          navDb: "dB",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Roon と HQPlayer を連携：ゼロから始める高音質設定ガイド",
+          step1Title: "ステップ 1 — Roon に HQPlayer コントロールを追加",
+          step1Body:
+            "Roon の <strong>Settings（設定）</strong>を開き、<strong>Setup</strong> タブに切り替えます。下の <strong>HQPlayer</strong> 欄で、右側の <strong>Add HQPlayer</strong> をクリックします。",
+          step2Title: "ステップ 2 — ネットワーク経路と認証",
+          step2Body:
+            "右側のウィンドウで <strong>HQPlayer</strong> を選択します。これにより、デバイス選択時に HQPlayer を見つけやすくなります。",
+          step3Title: "ステップ 3 — 接続完了と Zone の切替",
+          step3Body:
+            "<strong>Add</strong> を押したら、Roon の再生メイン画面に戻り、右下の <strong>Zone（音響ゾーン）</strong>から、先ほど追加した HQPlayer に切り替えます。これで高音質デジタル再生のセットアップが完了です。",
+          imgTapHint: "画像をタップ／クリックで拡大表示",
+          imgAlt1: "Roon 設定 → Setup：HQPlayer と Add HQPlayer",
+          imgAlt2: "追加ダイアログで HQPlayer を選択",
+          lightboxClose: "閉じる",
+          footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
+          footerNote: "参考ガイド · ROON／HQPLAYER 非関連"
+        },
+        "zh-CN": {
+          htmlLang: "zh-Hans",
+          docTitle: "Roon 串联 HQPlayer 设置指南 · Hi-End Lab",
+          langLabel: "语言",
+          navBrandText: "Hi-End Lab",
+          navRoonHqp: "roon+HQPlayer 设置",
+          navTools: "计算工具",
+          navKnowledge: "知识科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "线材",
+          navHq: "滤波表",
+          navDb: "分贝",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Roon 串联 HQPlayer：从零开始的极致音质设定指南",
+          step1Title: "步骤一：在 Roon 中添加 HQPlayer 控制节点",
+          step1Body:
+            "打开 Roon 的 <strong>Settings（设置）</strong>，切换到 <strong>Setup</strong> 标签页。在下方找到 <strong>HQPlayer</strong> 区块，点击右侧的 <strong>Add HQPlayer</strong> 按钮。",
+          step2Title: "步骤二：设定网络路径与认证",
+          step2Body:
+            "在右侧窗口中选择 <strong>HQPlayer</strong>。这样在设备选择时，就能找到 HQPlayer。",
+          step3Title: "步骤三：完成连接并切换输出",
+          step3Body:
+            "点击 <strong>Add</strong> 后，回到 Roon 播放主界面，在右下角的 <strong>音频区域（Zone）</strong> 切换至刚刚添加的 HQPlayer。现在，您已经成功启动了极致的数位播放组合！",
+          imgTapHint: "点击图片可查看大图",
+          imgAlt1: "Roon 设置：Setup 标签下的 HQPlayer 与 Add HQPlayer",
+          imgAlt2: "添加设备对话框中选择 HQPlayer",
+          lightboxClose: "关闭",
+          footerCopy: "音响工程师的数字工具箱 © 2024",
+          footerNote: "教学指南 · 与 ROON／HQPLAYER 无关联"
+        },
+        "zh-TW": {
+          htmlLang: "zh-Hant",
+          docTitle: "Roon 串聯 HQPlayer 設定指南 · Hi-End Lab",
+          langLabel: "語言",
+          navBrandText: "Hi-End Lab",
+          navRoonHqp: "roon+HQPlayer 設定",
+          navTools: "計算工具",
+          navKnowledge: "知識科普",
+          navRoon: "roon",
+          navDamping: "阻尼",
+          navCable: "線材",
+          navHq: "濾波表",
+          navDb: "分貝",
+          brandLine: "Hi-End Digital Audio Lab",
+          pageTitle: "Roon 串聯 HQPlayer：從零開始的極致音質設定指南",
+          step1Title: "步驟一：在 Roon 中添加 HQPlayer 控制節點",
+          step1Body:
+            "打開 Roon 的 <strong>Settings（設定）</strong>，切換到 <strong>Setup</strong> 標籤頁。在下方找到 <strong>HQPlayer</strong> 區塊，點擊右側的 <strong>Add HQPlayer</strong> 按鈕。",
+          step2Title: "步驟二：設定網路路徑與認證",
+          step2Body:
+            "在右側視窗中選取 <strong>HQPlayer</strong>；之後在裝置選擇時，即可找到 HQPlayer。",
+          step3Title: "步驟三：完成連接並切換輸出",
+          step3Body:
+            "點擊 <strong>Add</strong> 後，回到 Roon 播放主介面，在右下角的 <strong>音訊區域（Zone）</strong> 切換至剛剛添加的 HQPlayer。現在，您已經成功啟動了地表最強的數位播放組合！",
+          imgTapHint: "點擊可查看大圖",
+          imgAlt1: "Roon 設定：Setup 分頁中的 HQPlayer 與 Add HQPlayer",
+          imgAlt2: "新增裝置視窗中選取 HQPlayer",
+          lightboxClose: "關閉",
+          footerCopy: "音響工程師的數位工具箱 © 2024",
+          footerNote: "教學指南 · 與 ROON／HQPLAYER 無商業關聯"
+        }
+      };
+
+      function getStrings(lang) {
+        return STRINGS[lang] || STRINGS[DEFAULT_LANG];
+      }
+
+      function setBodyLangClass(lang) {
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW");
+        document.body.classList.add("lang-" + lang);
+      }
+
+      var langSelect = document.getElementById("lang-select");
+      var currentLang = DEFAULT_LANG;
+      var lightbox = document.getElementById("lightbox");
+      var lightboxImg = document.getElementById("lightbox-img");
+      var lightboxClose = document.getElementById("lightbox-close");
+
+      function wireLightbox(imgId) {
+        var el = document.getElementById(imgId);
+        if (!el) return;
+        el.addEventListener("click", function () {
+          var L = getStrings(currentLang);
+          var src = el.getAttribute("data-full") || el.src;
+          lightboxImg.src = src;
+          lightboxImg.alt = el.alt || "";
+          lightboxClose.setAttribute("aria-label", L.lightboxClose);
+          if (typeof lightbox.showModal === "function") {
+            lightbox.showModal();
+          }
+        });
+      }
+
+      lightboxClose.addEventListener("click", function () {
+        lightbox.close();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && lightbox.open) lightbox.close();
+      });
+      lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) lightbox.close();
+      });
+
+      function applyLocale(lang) {
+        if (!STRINGS[lang]) lang = DEFAULT_LANG;
+        currentLang = lang;
+        setBodyLangClass(lang);
+        document.documentElement.dir = "ltr";
+        var L = getStrings(lang);
+        document.documentElement.lang = L.htmlLang;
+        document.title = L.docTitle;
+
+        document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-roon-hqp").textContent = L.navRoonHqp;
+        document.getElementById("nav-link-tools").textContent = L.navTools;
+        document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
+        document.getElementById("nav-roon").textContent = L.navRoon;
+        document.getElementById("nav-damping").textContent = L.navDamping;
+        document.getElementById("nav-cable").textContent = L.navCable;
+        document.getElementById("nav-hq").textContent = L.navHq;
+        document.getElementById("nav-db").textContent = L.navDb;
+
+        document.getElementById("i18n-lang-label").textContent = L.langLabel;
+        document.getElementById("i18n-brand").textContent = L.brandLine;
+        document.getElementById("i18n-page-title").textContent = L.pageTitle;
+        document.getElementById("step1-title").textContent = L.step1Title;
+        document.getElementById("step1-body").innerHTML = L.step1Body;
+        document.getElementById("step2-title").textContent = L.step2Title;
+        document.getElementById("step2-body").innerHTML = L.step2Body;
+        document.getElementById("step3-title").textContent = L.step3Title;
+        document.getElementById("step3-body").innerHTML = L.step3Body;
+
+        document.getElementById("img-hint-1").textContent = L.imgTapHint;
+        document.getElementById("img-hint-2").textContent = L.imgTapHint;
+        document.getElementById("img-step1").alt = L.imgAlt1;
+        document.getElementById("img-step2").alt = L.imgAlt2;
+        lightboxClose.setAttribute("aria-label", L.lightboxClose);
+
+        document.getElementById("i18n-footer-copy").textContent = L.footerCopy;
+        document.getElementById("i18n-footer-note").textContent = L.footerNote;
+
+        langSelect.value = lang;
+        try {
+          localStorage.setItem(STORAGE_KEY, lang);
+        } catch (e) {}
+      }
+
+      wireLightbox("img-step1");
+      wireLightbox("img-step2");
+
+      langSelect.addEventListener("change", function () {
+        applyLocale(langSelect.value);
+      });
+
+      var initial = DEFAULT_LANG;
+      try {
+        var saved = localStorage.getItem(STORAGE_KEY);
+        if (saved && STRINGS[saved]) initial = saved;
+      } catch (e) {}
+      applyLocale(initial);
+    })();
+  </script>
+</body>
+</html>

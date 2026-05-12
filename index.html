@@ -6,7 +6,7 @@
   <title>發燒級數位音訊計算機</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="hiend-common.css" />
 </head>
 <body class="lang-zh-TW">
@@ -14,24 +14,22 @@
     <div class="site-nav-inner">
       <a class="nav-brand" href="#top" id="nav-brand-text">Hi-End Lab</a>
       <div class="nav-links">
-        <a href="#section-tools" id="nav-link-tools">計算工具</a>
-        <a href="damping.html" id="nav-damping">阻尼</a>
-        <a href="cable.html" id="nav-cable">線材</a>
-        <a href="hq-filters.html" id="nav-hq">濾波表</a>
-        <a href="db.html" id="nav-db">dB</a>
-        <a href="knowledge.html" id="nav-link-knowledge">知識科普</a>
-        <a href="roon.html" id="nav-roon">roon</a>
+        <a href="roon-hqp-guide.html" id="nav-roon-hqp"></a>
+        <a href="#section-tools" id="nav-link-tools"></a>
+        <a href="damping.html" id="nav-damping"></a>
+        <a href="cable.html" id="nav-cable"></a>
+        <a href="hq-filters.html" id="nav-hq"></a>
+        <a href="db.html" id="nav-db"></a>
+        <a href="knowledge.html" id="nav-link-knowledge"></a>
+        <a href="roon.html" id="nav-roon"></a>
       </div>
       <div class="nav-actions">
-        <label for="lang-select" id="i18n-lang-label">語言</label>
+        <label for="lang-select" id="i18n-lang-label"></label>
         <select id="lang-select" aria-label="Language">
           <option value="en">English</option>
-          <option value="de">Deutsch</option>
-          <option value="ru">Русский</option>
-          <option value="ar">العربية</option>
           <option value="ja">日本語</option>
           <option value="zh-CN">中文（简体）</option>
-          <option value="zh-TW">中文（繁體）</option>
+          <option value="zh-TW" selected>中文（繁體）</option>
         </select>
       </div>
     </div>
@@ -76,10 +74,25 @@
                 />
                 <p id="rca-hint" class="hint"></p>
               </div>
-              <button type="button" class="btn-3d" id="btn-calc">計算 XLR 平衡輸出</button>
+                <button type="button" class="btn-3d" id="btn-calc">計算 XLR 平衡輸出</button>
             </div>
             <div id="xlr-result" class="result-block" hidden>
               <div class="result-value" id="xlr-value"></div>
+              <div id="xlr-volt-bars" class="xlr-volt-bars" hidden>
+                <div class="xlr-bar-row" aria-hidden="true">
+                  <div class="xlr-bar-caption" id="xlr-bar-rca-caption"></div>
+                  <div class="xlr-bar-track">
+                    <div class="xlr-bar-fill"></div>
+                  </div>
+                </div>
+                <div class="xlr-bar-row" aria-hidden="true">
+                  <div class="xlr-bar-caption" id="xlr-bar-xlr-caption"></div>
+                  <div class="xlr-bar-track">
+                    <div class="xlr-bar-fill"></div>
+                  </div>
+                </div>
+                <p class="xlr-progress-hint" id="xlr-progress-hint"></p>
+              </div>
               <p class="result-note" id="xlr-note"></p>
             </div>
           </div>
@@ -87,26 +100,31 @@
             <p class="connector-chart-title" id="connector-chart-title"></p>
             <div class="connector-svg-wrap">
               <svg viewBox="0 0 440 156" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="svg-conn-desc">
-                <title id="svg-conn-desc">RCA plug and XLR female socket pin numbering</title>
+                <title id="svg-conn-desc">RCA male phono plug face view (tip center, sleeve barrel); XLR female socket pin numbering</title>
                 <defs>
                   <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style="stop-color:#6b6e76" />
                     <stop offset="100%" style="stop-color:#3a3c42" />
                   </linearGradient>
+                  <radialGradient id="rcaSleeveGrad" cx="45%" cy="40%" r="65%">
+                    <stop offset="0%" style="stop-color:#7a7e88" />
+                    <stop offset="55%" style="stop-color:#4a4d56" />
+                    <stop offset="100%" style="stop-color:#2d3036" />
+                  </radialGradient>
                   <linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" style="stop-color:#e4d4a8" />
                     <stop offset="100%" style="stop-color:#8b7340" />
                   </linearGradient>
                 </defs>
                 <text x="88" y="18" fill="#c9a962" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="0.15em">RCA</text>
-                <rect x="28" y="36" width="120" height="36" rx="4" fill="url(#metalGrad)" stroke="#5a5d65" stroke-width="1" />
-                <rect x="36" y="44" width="28" height="20" rx="2" fill="#2a2c30" stroke="#c9a962" stroke-width="0.8" />
-                <text x="41" y="58" fill="#e4d4a8" font-size="9" font-weight="600">TIP</text>
-                <rect x="68" y="46" width="72" height="16" rx="2" fill="#1e1f22" stroke="#6b6e76" stroke-width="0.6" />
-                <path d="M 148 54 L 168 54" stroke="#c9a962" stroke-width="1.2" fill="none" opacity="0.65" />
-                <ellipse cx="88" cy="118" rx="34" ry="13" fill="none" stroke="#5a5d65" stroke-width="1" />
-                <circle cx="88" cy="118" r="10" fill="#3a3c42" stroke="#c9a962" stroke-width="1" />
-                <circle cx="88" cy="118" r="4" fill="#e4d4a8" />
+                <!-- Male RCA (phono): looking at the mating face — outer barrel = sleeve (GND), center pin = tip (hot) -->
+                <g>
+                  <circle cx="88" cy="80" r="34" fill="#1a1b1e" stroke="#4a4d56" stroke-width="1" />
+                  <circle cx="88" cy="80" r="30" fill="url(#rcaSleeveGrad)" stroke="#5a5d65" stroke-width="1.1" />
+                  <circle cx="88" cy="80" r="17" fill="#121316" stroke="#2a2c30" stroke-width="0.9" />
+                  <circle cx="88" cy="80" r="12" fill="#1e1f22" stroke="#3a3c42" />
+                  <circle cx="88" cy="80" r="5.5" fill="#e4d4a8" stroke="#8b7340" stroke-width="0.75" />
+                </g>
 
                 <text x="318" y="18" fill="#c9a962" font-family="Orbitron, sans-serif" font-size="11" letter-spacing="0.15em">XLR</text>
                 <circle cx="338" cy="82" r="50" fill="#25262b" stroke="url(#goldStroke)" stroke-width="1.5" />
@@ -138,7 +156,7 @@
 
       /**
        * All UI strings per locale (embedded in HTML page).
-       * Keys: en, ja, zh-CN, zh-TW, ru, de, ar
+       * Keys: en, ja, zh-CN, zh-TW
        */
       var STRINGS = {
         en: {
@@ -149,6 +167,7 @@
           navTools: "Tools",
           navKnowledge: "Primer",
           navRoon: "roon",
+          navRoonHqp: "Roon + HQPlayer setup",
           navDamping: "DF",
           navCable: "Cable",
           navHq: "Filters",
@@ -250,7 +269,15 @@
               v +
               '</strong> V<sub>rms</sub> (RCA × 2)'
             );
-          }
+          },
+          xlrBarRcaCaptionHtml: function (v) {
+            return 'RCA single-ended <strong>' + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrBarXlrCaptionHtml: function (v) {
+            return 'XLR balanced <strong>' + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrProgressHint:
+            "⚡ That's double the voltage swing: turn the same volume knob and the music hits harder—balanced XLR also helps strip out common-mode noise."
         },
         ja: {
           htmlLang: "ja",
@@ -260,6 +287,7 @@
           navTools: "ツール",
           navKnowledge: "解説",
           navRoon: "roon",
+          navRoonHqp: "Roon＋HQPlayer 設定",
           navDamping: "DF",
           navCable: "ケーブル",
           navHq: "フィルタ",
@@ -361,7 +389,15 @@
               v +
               '</strong> V<sub>rms</sub>（RCA × 2）'
             );
-          }
+          },
+          xlrBarRcaCaptionHtml: function (v) {
+            return 'RCA アンバランス <strong>' + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrBarXlrCaptionHtml: function (v) {
+            return 'XLR バランス <strong>' + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrProgressHint:
+            "⚡ 電圧は約2倍＝同じボリューム位置でもより力強く。XLR バランス伝送は同相ノイズ対策にも有利です。"
         },
         "zh-CN": {
           htmlLang: "zh-Hans",
@@ -371,12 +407,11 @@
           navTools: "计算工具",
           navKnowledge: "知识科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 设置",
           navDamping: "阻尼",
           navCable: "线材",
           navHq: "滤波表",
           navDb: "分贝",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "发烧级数字音频计算器",
           subtitle: "DSD · 耳机阻尼 · 线材损耗 · HQPlayer · 电平换算",
           dsdPanelTitle: "DSD512 升频滤波推荐",
           cpuLabel: "CPU／芯片等级",
@@ -471,8 +506,17 @@
               v +
               "</strong> V<sub>rms</sub>（RCA × 2）"
             );
-          }
+          },
+          xlrBarRcaCaptionHtml: function (v) {
+            return "RCA 单端 <strong>" + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrBarXlrCaptionHtml: function (v) {
+            return "XLR 平衡 <strong>" + v + "</strong> V<sub>rms</sub>";
+          },
+          xlrProgressHint:
+            "⚡ 推力直接翻倍！转动相同的音量旋钮，您会听到更饱满的力量，且背景杂音完全消失。"
         },
+
         "zh-TW": {
           htmlLang: "zh-Hant",
           docTitle: "發燒級數位音訊計算機",
@@ -481,12 +525,11 @@
           navTools: "計算工具",
           navKnowledge: "知識科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 設定",
           navDamping: "阻尼",
           navCable: "線材",
           navHq: "濾波表",
           navDb: "分貝",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "發燒級數位音訊計算機",
           subtitle: "DSD · 耳機阻尼 · 線材損耗 · HQPlayer · 電平換算",
           dsdPanelTitle: "DSD512 升頻濾波推薦器",
           cpuLabel: "CPU／晶片等級",
@@ -495,78 +538,78 @@
           tierUpper: "進階：Intel i7／Apple M2 Pro",
           tierHigh: "高階：Intel i9／Apple M3 Max",
           dsdHint:
-            "依機器算力推估 HQPlayer 濾波與噪音整形負載；實際請依播放是否卡頓微調。",
+            "依据机器算力估算 HQPlayer 滤波与噪声整形负载；请以实际播放是否卡顿为准微调。",
           hqEntry:
-            "建議採用較省 CPU 的組合：<strong>poly-sinc-short-mp</strong> 或抽頭較短的 <strong>poly-sinc-xla</strong>，搭配 <strong>AMSDM7 256+fs</strong>；若仍吃力可將目標降為 <strong>DSD256</strong>，優先維持播放流暢與底噪穩定。",
+            "建议采用较省 CPU 的组合：<strong>poly-sinc-short-mp</strong> 或抽头较短的 <strong>poly-sinc-xla</strong>，搭配 <strong>AMSDM7 256+fs</strong>；若仍吃力可将目标降为 <strong>DSD256</strong>，优先保证播放流畅与底噪稳定。",
           hqMid:
-            "建議使用 <strong>poly-sinc-xla</strong> 搭配 <strong>AMSDM7 512+fs</strong>；CPU 仍有餘裕時可逐步嘗試更高階濾波或更接近 <strong>DSD512</strong> 的設定，並以實際卡頓與溫度為準微調。",
+            "建议使用 <strong>poly-sinc-xla</strong> 搭配 <strong>AMSDM7 512+fs</strong>；CPU 仍有裕量时可逐步尝试更高阶滤波或更接近 <strong>DSD512</strong> 的设置，并以实际卡顿与温度为准微调。",
           hqUpper:
-            "此級別典型對應 <strong>Intel Core i7</strong>（第 12 代起常見 <strong>P-core／E-core</strong> 混合架構，實際核心數依型號而定）或 <strong>Apple M2 Pro</strong>（約 <strong>10～12 CPU 核心級</strong>持續算力），足以負荷較長抽頭濾波。建議主線：<strong>poly-sinc-xla</strong> 或 <strong>poly-sinc-long-hp</strong> 搭配 <strong>AMSDM7 512+fs</strong>；若工作管理員／活動監視器顯示 CPU 長期低於約 <strong>65～75%</strong>，可嘗試 <strong>poly-sinc-gauss-long-hp</strong> 並將目標推向 <strong>DSD512</strong>，SDM 可先試 <strong>AMSDM7EC 256+fs</strong> 再逐步升到 <strong>512+fs</strong>。請將 HQPlayer 緩衝維持在約 <strong>100～250 ms</strong>（視 ASIO／CoreAudio 裝置而定）以降低欠載風險。",
+            "该档位通常对应 <strong>Intel Core i7</strong>（第 12 代及以后常见 <strong>P+E 性能／能效核</strong>，核心数以具体型号为准）或 <strong>Apple M2 Pro</strong>（约 <strong>10～12 CPU 核心级</strong>持续算力），足以驱动较长抽头滤波。建议主线：<strong>poly-sinc-xla</strong> 或 <strong>poly-sinc-long-hp</strong> 搭配 <strong>AMSDM7 512+fs</strong>；若任务管理器／活动监视器中 CPU 长期低于约 <strong>65～75%</strong>，可尝试 <strong>poly-sinc-gauss-long-hp</strong> 并向 <strong>DSD512</strong> 推进，SDM 可先试 <strong>AMSDM7EC 256+fs</strong> 再升到 <strong>512+fs</strong>。请将 HQPlayer 缓冲维持在约 <strong>100～250 ms</strong>（视 ASIO／CoreAudio 而定）以降低欠载风险。",
           hqHigh:
-            "推薦使用 <strong>poly-sinc-gauss-xla</strong> 搭配 <strong>AMSDM7EC 512+fs</strong> 以達到完美 <strong>DSD512</strong>；請確認散熱與電源餘裕，並依曲目取樣率檢查 ASIO／CoreAudio 緩衝是否足夠。",
-          xlrPanelTitle: "XLR vs RCA 增益換算",
-          rcaLabelHtml: 'RCA 單端輸出電壓（V<sub>rms</sub>）',
-          rcaHint: "常見 CD／DAC 單端標準約為 2 V<sub>rms</sub>。",
+            "推荐使用 <strong>poly-sinc-gauss-xla</strong> 搭配 <strong>AMSDM7EC 512+fs</strong> 以追求完整 <strong>DSD512</strong>；请确认散热与电源裕量，并按曲目采样率检查 ASIO／CoreAudio 缓冲是否足够。",
+          xlrPanelTitle: "XLR 与 RCA 增益换算",
+          rcaLabelHtml: 'RCA 单端输出电压（V<sub>rms</sub>）',
+          rcaHint: "常见 CD／DAC 单端标准约为 2 V<sub>rms</sub>。",
           btnCalc: "計算 XLR 平衡輸出",
           xlrNote:
-            "全系統採用 XLR 傳輸能顯著提升動態範圍並抵銷共模雜訊。",
-          connectorDiagramTitle: "接頭定義對照（示意）",
+            "全系统采用 XLR 传输有助于提升动态范围并抵消共模噪声。",
+          connectorDiagramTitle: "接头定义对照（示意）",
           connectorLegendHtml:
-            '<div class="legend-block"><strong>RCA（梅花頭，單端／非平衡）</strong><br />中心尖端（TIP）：訊號（熱端） · 外圍桶身（SLEEVE）：接地與屏蔽</div><div class="legend-block"><strong>XLR 三芯（平衡，常見類比音訊）</strong><br />Pin 1：接地／屏蔽 · Pin 2：熱端（+） · Pin 3：冷端（−）。圖示為母座正面視角、三腳呈三角形之示意；實際鍵位依品牌／機種而異，請以設備手冊為準。</div>',
-          dampingTitle: "阻抗匹配 · 阻尼係數（DF）",
+            '<div class="legend-block"><strong>RCA（莲花头，非平衡）</strong><br />中心柱（尖端／TIP）：信号（热端） · 外筒（外壳）：接地与屏蔽</div><div class="legend-block"><strong>XLR 三芯（平衡，通用模拟音频）</strong><br />针脚 1：接地／屏蔽 · 针脚 2：热端（+） · 针脚 3：冷端（−）。图示为母座正视、针脚呈三角形排列的常见画法；具体请以设备说明书为准。</div>',
+          dampingTitle: "阻抗匹配 · 阻尼系数（DF）",
           dampingHint:
-            "DF ≈ 耳機阻抗 ÷ 擴大機輸出阻抗。輸出阻抗越高，DF 越低，低頻控制力可能變差。",
-          dampingHpLabel: "耳機阻抗（Ω）",
-          dampingAmpLabel: "擴大機輸出阻抗（Ω）",
+            "DF ≈ 耳机阻抗 ÷ 放大器输出阻抗。输出阻抗越高，DF 越低，低频控制力可能变差。",
+          dampingHpLabel: "耳机阻抗（Ω）",
+          dampingAmpLabel: "放大器输出阻抗（Ω）",
           btnDamping: "計算阻尼係數",
           dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">（理想 0 Ω 訊號源）</span>',
+            'DF → <strong>∞</strong> <span style="opacity:.75">（理想 0 Ω 音源）</span>',
           dampingResultHtml: function (df) {
             return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
           },
           dampingResultExplain:
-            "經驗上常聽到 DF＞8 等說法，實際聽感仍取決於單體與阻尼網路。",
+            "经验上常提到 DF＞8 等参考值，实际听感仍取决于耳机单元与阻尼网络。",
           errDamping: "請輸入有效阻抗（耳機須為正數，輸出須≥0）。",
-          cableTitle: "線材長度 · 電平損耗估算",
+          cableTitle: "线材长度 · 电平损耗估算",
           cableHint:
-            "面向線路級長距離佈線的簡化電阻模型，粗估衰減；非傳輸線模擬。",
-          cableLenLabel: "線材長度（m）",
-          cablePresetLabel: "銅導體約 Ω／每米（單芯）",
-          cablePresetHeavy: "約 0.12 Ω/m · 較細／長距離",
-          cablePresetMid: "約 0.08 Ω/m · 常見工程線材",
-          cablePresetLight: "約 0.04 Ω/m · 較粗／短距離",
-          cableLoadLabel: "後級負載阻抗 Z（Ω）",
+            "面向线路级长距离传输的简化电阻模型，用于粗估压降；非传输线仿真。",
+          cableLenLabel: "线材长度（m）",
+          cablePresetLabel: "铜芯约 Ω／每米（单根导体）",
+          cablePresetHeavy: "约 0.12 Ω/m · 较细／长线",
+          cablePresetMid: "约 0.08 Ω/m · 常见工程线缆",
+          cablePresetLight: "约 0.04 Ω/m · 较粗／短线",
+          cableLoadLabel: "下一级负载阻抗 Z（Ω）",
           cableModelHint:
-            "串聯近似：R<sub>線</sub> ≈ 2 × 長度 × Ω/m（往返）。損耗 dB = 20·log<sub>10</sub>(Z/(Z+R<sub>線</sub>))。",
+            "串联近似：R<sub>线</sub> ≈ 2 × 长度 × Ω/m（往返）。损耗 dB = 20·log<sub>10</sub>(Z/(Z+R<sub>线</sub>))。",
           btnCable: "估算衰減",
           cableResultHtml: function (lossDb, ratioV, rWire) {
             return (
-              "約 <strong>" +
+              "约 <strong>" +
               lossDb.toFixed(3) +
-              "</strong> dB · 電壓比 <strong>" +
+              "</strong> dB · 电压比 <strong>" +
               ratioV.toFixed(5) +
-              "</strong> · R<sub>線</sub> ≈ <strong>" +
+              "</strong> · R<sub>线</sub> ≈ <strong>" +
               rWire.toFixed(2) +
               "</strong> Ω"
             );
           },
           cableResultExplain:
-            "線路輸入阻抗偏高時，除非線材極長且細，絕對損耗通常很小。正式工程請依 AWG 表選線。",
+            "线路输入阻抗很高时，除非线极长且细，绝对损耗通常很小。工程布线请查 AWG 表。",
           errCable: "請確認長度、線材類型與負載為正。",
-          hqFilterTitle: "HQPlayer 濾波器對照表（參考）",
+          hqFilterTitle: "HQPlayer 滤波器对照表（参考）",
           hqFilterIntro:
-            "教學向摘要；版本差異大。<strong>1×</strong> 表示該階段輸出取樣率與輸入相同；<strong>N×</strong> 表示先做整數倍升頻再送 SDM，CPU 較重但濾波自由度較大。",
+            "教学向摘要；版本差异大。<strong>1×</strong> 表示该阶段输出采样率与输入相同；<strong>N×</strong> 表示先做整数倍升频再送 SDM，CPU 负载更高但滤波自由度更大。",
           hqFilterTableHtml:
-            '<table class="hq-compare-table"><thead><tr><th scope="col">濾波／概念</th><th scope="col">負載感</th><th scope="col">適用情境（經驗）</th></tr></thead><tbody><tr><td><code>1×</code></td><td>較輕</td><td>不改速率直接噪聲整形 — 省算力、先求穩定播放。</td></tr><tr><td><code>N×</code>（2×／4×…）</td><td>較重</td><td>升頻後再 SDM — 與 CPU 等級、緩衝一起調。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短抽頭</td><td>入門算力、長時間聆聽優先流暢。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中長 XL</td><td>中階 CPU 的日常平衡選項。</td></tr><tr><td><code>poly-sinc-long-hp</code> 等</td><td>長 sinc</td><td>散熱與緩衝有餘裕再開。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>高斯窗 · 最重</td><td>旗艦算力、追求高倍率 DSD 路徑。</td></tr><tr><td>最小相位／線性相位</td><td>預鈴／延遲取捨</td><td><code>-mp</code> 與 <code>-lp</code> 影響脈衝響應形狀。</td></tr></tbody></table>',
-          dbTitle: "互動式音量換算 · dB ↔ 電壓倍數",
+            '<table class="hq-compare-table"><thead><tr><th scope="col">滤波／概念</th><th scope="col">负载感</th><th scope="col">适用场景（经验）</th></tr></thead><tbody><tr><td><code>1×</code></td><td>较轻</td><td>不改速率直接噪声整形 — 省 CPU、先求稳定。</td></tr><tr><td><code>N×</code>（2×／4×…）</td><td>较重</td><td>升频后再 SDM — 与 CPU 档位、缓冲联动调节。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短抽头</td><td>入门算力、长时间播放优先流畅。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中长 XL</td><td>中端 CPU 的日常平衡选项。</td></tr><tr><td><code>poly-sinc-long-hp</code> 等</td><td>长 sinc</td><td>散热与缓冲有余量时再开。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>高斯窗 · 最重</td><td>旗舰算力、追求高倍率 DSD 路径。</td></tr><tr><td>最小相位／线性相位</td><td>预铃／延迟取舍</td><td><code>-mp</code> 与 <code>-lp</code> 影响脉冲响应形状。</td></tr></tbody></table>',
+          dbTitle: "交互式音量换算 · dB ↔ 电压倍",
           dbHint:
-            "相對電平 ΔdB：電壓乘以 10<sup>Δ/20</sup>。+6 dB ≈ 電壓 ×2；-6 dB ≈ ×0.5。",
-          dbLabel: "電平變化 ΔdB",
+            "相对电平 ΔdB：电压乘以 10<sup>Δ/20</sup>。+6 dB ≈ 电压 ×2；-6 dB ≈ ×0.5。",
+          dbLabel: "电平变化 ΔdB",
           dbResultHtml: function (ratio, db) {
             return (
               "Δ = <strong>" +
               db +
-              "</strong> dB → 電壓 × <strong>" +
+              "</strong> dB → 电压 × <strong>" +
               ratio.toFixed(5) +
               "</strong>"
             );
@@ -577,343 +620,20 @@
           errVoltage: "請輸入有效的非負電壓數值。",
           xlrResultHtml: function (v) {
             return (
-              "對應 XLR 平衡輸出約為 <strong>" +
+              "对应 XLR 平衡输出约为 <strong>" +
               v +
               "</strong> V<sub>rms</sub>（RCA × 2）"
             );
-          }
-        },
-        ru: {
-          htmlLang: "ru",
-          docTitle: "Цифровой аудиокалькулятор для аудиофилов · Hi-End Lab",
-          langLabel: "Язык",
-          navBrandText: "Hi-End Lab",
-          navTools: "Инструменты",
-          navKnowledge: "Обзор",
-          navRoon: "roon",
-          navDamping: "Демпф.",
-          navCable: "Кабель",
-          navHq: "Фильтры",
-          navDb: "дБ",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "Цифровой аудиокалькулятор для аудиофилов",
-          subtitle: "DSD · наушники · кабели · HQPlayer · уровень",
-          dsdPanelTitle: "Помощник по апсемплингу и фильтрам DSD512",
-          cpuLabel: "Класс CPU / SoC",
-          tierEntry: "Начальный: Intel i3 / Apple M1",
-          tierMid: "Средний: Intel i5 / Apple M2",
-          tierUpper: "Выше среднего: Intel i7 / Apple M2 Pro",
-          tierHigh: "Топовый: Intel i9 / Apple M3 Max",
-          dsdHint:
-            "Оценка нагрузки фильтров HQPlayer и шумоподавления по классу CPU — подстраивайте при заикании воспроизведения.",
-          hqEntry:
-            "Берите более лёгкую связку: <strong>poly-sinc-short-mp</strong> или более короткий <strong>poly-sinc-xla</strong> с <strong>AMSDM7 256+fs</strong>. Если всё ещё тяжело — цельтесь в <strong>DSD256</strong>: сначала стабильное воспроизведение и фон.",
-          hqMid:
-            "Попробуйте <strong>poly-sinc-xla</strong> с <strong>AMSDM7 512+fs</strong>. Если есть запас CPU — шагайте к более тяжёлым фильтрам или ближе к <strong>DSD512</strong>; ориентируйтесь на дропауты и температуру.",
-          hqUpper:
-            "Обычно соответствует <strong>Intel Core i7</strong> (гибридные ядра <strong>P+E</strong>, число зависит от поколения) или <strong>Apple M2 Pro</strong> (около <strong>10–12 ядер</strong> класса CPU). База: <strong>poly-sinc-xla</strong> или <strong>poly-sinc-long-hp</strong> с <strong>AMSDM7 512+fs</strong>. Если при воспроизведении CPU ниже ~<strong>65–75%</strong>, можно пробовать <strong>poly-sinc-gauss-long-hp</strong> к <strong>DSD512</strong>; SDM начинайте с <strong>AMSDM7EC 256+fs</strong>, затем <strong>512+fs</strong>. Буфер HQPlayer держите около <strong>100–250 ms</strong> (зависит от драйвера).",
-          hqHigh:
-            "Для полного <strong>DSD512</strong>: <strong>poly-sinc-gauss-xla</strong> с <strong>AMSDM7EC 512+fs</strong>. Следите за охлаждением и БП; проверьте буферы ASIO/CoreAudio под каждый sample rate.",
-          xlrPanelTitle: "Пересчёт уровня XLR и RCA",
-          rcaLabelHtml: 'Выход RCA, несимметричный (V<sub>rms</sub>)',
-          rcaHint: "Типичный уровень CD/DAC несимметрично около 2 V<sub>rms</sub>.",
-          btnCalc: "Рассчитать симметричный выход XLR",
-          xlrNote:
-            "Симметричная цепочка XLR помогает динамическому диапазону и подавлению синфазных помех.",
-          connectorDiagramTitle: "РАСПИНОВКА РАЗЪЁМОВ",
-          connectorLegendHtml:
-            '<div class="legend-block"><strong>RCA (несимметричный)</strong><br />Центральный штырь (Tip): сигнал · Внешний экран (Sleeve): земля и экран</div><div class="legend-block"><strong>XLR 3-pin (симметричный)</strong><br />Pin 1: земля/экран · Pin 2: горячий (+) · Pin 3: холодный (−). Рисунок: розетка, вид спереди — схематично; сверяйтесь с мануалом устройства.</div>',
-          dampingTitle: "Демпфирование наушников (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>наушники</sub> ÷ Z<sub>вых.усилителя</sub>. Выше выходной импеданс усилителя — ниже DF и слабее контроль НЧ.",
-          dampingHpLabel: "Импеданс наушников (Ω)",
-          dampingAmpLabel: "Выходной Z усилителя (Ω)",
-          btnDamping: "Рассчитать DF",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(идеал: 0 Ω)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
           },
-          dampingResultExplain:
-            "Часто упоминают DF > 8 как ориентир; реальный звук зависит от драйвера и схемы демпфирования.",
-          errDamping: "Введите корректные импедансы (наушники > 0, выход ≥ 0).",
-          cableTitle: "Длина кабеля — потери уровня (оценка)",
-          cableHint:
-            "Упрощённая резистивная модель линейного уровня для длинных линий; не модель линии передачи.",
-          cableLenLabel: "Длина кабеля (м)",
-          cablePresetLabel: "Медь ≈ Ω на проводник / м",
-          cablePresetHeavy: "~0,12 Ω/м · тонкий / длинный",
-          cablePresetMid: "~0,08 Ω/м · студийный типовой",
-          cablePresetLight: "~0,04 Ω/м · толще / короче",
-          cableLoadLabel: "Импеданс нагрузки Z (Ω)",
-          cableModelHint:
-            "Последовательная модель: R<sub>каб</sub> ≈ 2 × длина × Ω/м (туда-обратно). Потери<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>н</sub> / (Z<sub>н</sub> + R<sub>каб</sub>)).",
-          btnCable: "Оценить затухание",
-          cableResultHtml: function (lossDb, ratioV, rWire) {
-            return (
-              "≈ <strong>" +
-              lossDb.toFixed(3) +
-              "</strong> дБ · отн. напряжения <strong>" +
-              ratioV.toFixed(5) +
-              "</strong> · R<sub>каб</sub> ≈ <strong>" +
-              rWire.toFixed(2) +
-              "</strong> Ω"
-            );
+          xlrBarRcaCaptionHtml: function (v) {
+            return "RCA 单端 <strong>" + v + "</strong> V<sub>rms</sub>";
           },
-          cableResultExplain:
-            "При высоком Z<sub>н</sub> (типичный линейный вход) абсолютные потери малы, если кабель не очень длинный и тонкий. Для инсталляций сверяйтесь с таблицами AWG.",
-          errCable: "Укажите длину ≥ 0, корректный пресет Ω/м и нагрузку > 0.",
-          hqFilterTitle: "Сравнение фильтров HQPlayer (справочно)",
-          hqFilterIntro:
-            "Учебный обзор; сборки отличаются. Суффиксы <code>-mp</code> (минимальная фаза) и <code>-lp</code> (линейная фаза) меняют звон/задержку. <strong>1×</strong> — выходная частота равна входной на этапе; <strong>N×</strong> — целочисленный апсемплинг перед SDM, тяжелее для CPU.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">Фильтр / концепция</th><th scope="col">Нагрузка</th><th scope="col">Типичный сценарий</th></tr></thead><tbody><tr><td><code>1×</code></td><td>Легче</td><td>Без смены частоты до SDM — проверка запаса CPU.</td></tr><tr><td><code>N×</code> (2×/4×/…)</td><td>Тяжелее</td><td>Апсемплинг перед шумоподавлением — согласуйте длину sinc с CPU.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>Самый лёгкий</td><td>Ноутбуки / слабые CPU; без дропаутов.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>Средняя</td><td>Баланс на «среднем» CPU.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>Длинный sinc</td><td>Если термалы и буфер позволяют.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>Максимум</td><td>Топовые ПК / Apple Silicon, цель DSD512.</td></tr><tr><td>Мин. фаза / лин. фаза</td><td>Задержка / предзвон</td><td><code>-mp</code> и <code>-lp</code> меняют импульсный отклик.</td></tr></tbody></table>',
-          dbTitle: "Интерактивно: дБ ↔ отношение напряжения",
-          dbHint:
-            "Относительный уровень ΔdB умножает амплитуду на 10<sup>ΔdB/20</sup>. +6 дБ ≈ ×2 напряжения; −6 дБ ≈ ×0,5.",
-          dbLabel: "Изменение уровня ΔdB",
-          dbResultHtml: function (ratio, db) {
-            return (
-              "Δ = <strong>" +
-              db +
-              "</strong> дБ → напряжение × <strong>" +
-              ratio.toFixed(5) +
-              "</strong>"
-            );
+          xlrBarXlrCaptionHtml: function (v) {
+            return "XLR 平衡 <strong>" + v + "</strong> V<sub>rms</sub>";
           },
-          errDb: "Введите корректное число.",
-          footerCopy: "Цифровой набор инженера по звуку © 2024",
-          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER",
-          errVoltage: "Введите корректное неотрицательное напряжение.",
-          xlrResultHtml: function (v) {
-            return (
-              "Симметричный XLR ≈ <strong>" +
-              v +
-              "</strong> V<sub>rms</sub> (RCA × 2)"
-            );
-          }
-        },
-        de: {
-          htmlLang: "de",
-          docTitle: "Digital-Audio-Rechner für Audiophile · Hi-End Lab",
-          langLabel: "Sprache",
-          navBrandText: "Hi-End Lab",
-          navTools: "Werkzeuge",
-          navKnowledge: "Grundlagen",
-          navRoon: "roon",
-          navDamping: "Dämpfung",
-          navCable: "Kabel",
-          navHq: "Filter",
-          navDb: "dB",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "Digital-Audio-Rechner für Audiophile",
-          subtitle: "DSD · Kopfhörer · Kabel · HQPlayer · Pegel",
-          dsdPanelTitle: "DSD512 Upsampling- & Filter-Ratgeber",
-          cpuLabel: "CPU- / SoC-Klasse",
-          tierEntry: "Einstieg: Intel i3 / Apple M1",
-          tierMid: "Mitte: Intel i5 / Apple M2",
-          tierUpper: "Oberes Mittelfeld: Intel i7 / Apple M2 Pro",
-          tierHigh: "High-End: Intel i9 / Apple M3 Max",
-          dsdHint:
-            "HQPlayer-Filter- und Noise-Shaping-Last wird nach CPU-Klasse geschätzt — bei Stockern nachjustieren.",
-          hqEntry:
-            "Leichtere Last wählen: <strong>poly-sinc-short-mp</strong> oder kürzeres <strong>poly-sinc-xla</strong> mit <strong>AMSDM7 256+fs</strong>. Zu schwer? Zuerst <strong>DSD256</strong> anstreben — stabile Wiedergabe und Grundrauschen priorisieren.",
-          hqMid:
-            "<strong>poly-sinc-xla</strong> mit <strong>AMSDM7 512+fs</strong> probieren. Bei CPU-Reserve zu schwereren Filtern oder näher an <strong>DSD512</strong>; Dropouts und Thermik beobachten.",
-          hqUpper:
-            "Typisch vergleichbar mit <strong>Intel Core i7</strong> (Hybrid-<strong>P+E</strong>-Kerne, je Generation unterschiedlich) oder <strong>Apple M2 Pro</strong> (ca. <strong>10–12 CPU-Kerne</strong>). Basis: <strong>poly-sinc-xla</strong> oder <strong>poly-sinc-long-hp</strong> mit <strong>AMSDM7 512+fs</strong>. Bleibt die CPU beim Abspielen unter ~<strong>65–75%</strong>, sind <strong>poly-sinc-gauss-long-hp</strong> Richtung <strong>DSD512</strong> möglich; SDM mit <strong>AMSDM7EC 256+fs</strong> beginnen, dann <strong>512+fs</strong>. HQPlayer-Puffer ca. <strong>100–250 ms</strong> (treiberabhängig).",
-          hqHigh:
-            "Für volles <strong>DSD512</strong>: <strong>poly-sinc-gauss-xla</strong> mit <strong>AMSDM7EC 512+fs</strong>. Kühlung und Netzteil beachten; ASIO/CoreAudio-Puffer pro Sample-Rate prüfen.",
-          xlrPanelTitle: "XLR vs. RCA Pegelumrechnung",
-          rcaLabelHtml: 'RCA unsymmetrischer Ausgang (V<sub>rms</sub>)',
-          rcaHint: "Typischer CD/DAC-Einzelende-Pegel etwa 2 V<sub>rms</sub>.",
-          btnCalc: "Symmetrischen XLR-Ausgang berechnen",
-          xlrNote:
-            "Durchgängig XLR kann Dynamik und Gleichtaktunterdrückung verbessern.",
-          connectorDiagramTitle: "STECKERBELEGUNG",
-          connectorLegendHtml:
-            '<div class="legend-block"><strong>RCA (Cinch, unsymmetrisch)</strong><br />Mitteleiter (Tip): Signal · Außenleiter (Sleeve): Masse & Schirm</div><div class="legend-block"><strong>XLR 3-pol (symmetrisch)</strong><br />Pin 1: Masse/Schirm · Pin 2: heiß (+) · Pin 3: kalt (−). Abbildung: Buchse von vorne — dreieckige Pin-Anordnung; immer Handbuch des Geräts prüfen.</div>',
-          dampingTitle: "Kopfhörer-Dämpfungsfaktor (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>Kopfhörer</sub> ÷ Z<sub>Ausgang(Verstärker)</sub>. Höherer Ausgangswiderstand senkt DF und kann Bass-Kontrolle lockern.",
-          dampingHpLabel: "Kopfhörerimpedanz (Ω)",
-          dampingAmpLabel: "Ausgangsimpedanz Verstärker (Ω)",
-          btnDamping: "DF berechnen",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(ideal 0 Ω Quelle)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
-          },
-          dampingResultExplain:
-            "Faustregel: DF > 8 wird oft genannt; der Klang hängt vom Treiber und der Dämpfung ab.",
-          errDamping: "Gültige Impedanzen eingeben (Kopfhörer > 0, Ausgang ≥ 0).",
-          cableTitle: "Kabellänge — Pegelabfall (Schätzung)",
-          cableHint:
-            "Grobes ohmsches Modell für Line-Pegel auf langen Streifen; keine Leitungswellen-Simulation.",
-          cableLenLabel: "Kabellänge (m)",
-          cablePresetLabel: "Kupfer ≈ Ω pro Leiter / m",
-          cablePresetHeavy: "~0,12 Ω/m · dünn / lang",
-          cablePresetMid: "~0,08 Ω/m · typisches Studio-Mikrofonkabel",
-          cablePresetLight: "~0,04 Ω/m · dicker / kurz",
-          cableLoadLabel: "Lastimpedanz nachgeschaltet Z (Ω)",
-          cableModelHint:
-            "Reihenmodell: R<sub>Kabel</sub> ≈ 2 × Länge × Ω/m (Hin und Rück). Verlust<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>Last</sub> / (Z<sub>Last</sub> + R<sub>Kabel</sub>)).",
-          btnCable: "Dämpfung schätzen",
-          cableResultHtml: function (lossDb, ratioV, rWire) {
-            return (
-              "≈ <strong>" +
-              lossDb.toFixed(3) +
-              "</strong> dB · Spannungsverhältnis <strong>" +
-              ratioV.toFixed(5) +
-              "</strong> · R<sub>Kabel</sub> ≈ <strong>" +
-              rWire.toFixed(2) +
-              "</strong> Ω"
-            );
-          },
-          cableResultExplain:
-            "Bei hohem Z<sub>Last</sub> (typische Line-Eingänge) sind absolute Verluste meist klein, außer Kabel ist sehr lang und dünn. Für Installationen AWG-Tabellen nutzen.",
-          errCable: "Länge ≥ 0, gültiges Ω/m-Preset und Last > 0 angeben.",
-          hqFilterTitle: "HQPlayer-Filtervergleich (Referenz)",
-          hqFilterIntro:
-            "Überblick zu Bildungszwecken; Builds unterscheiden sich. Suffixe wie <code>-mp</code> (Minimalphase) vs. <code>-lp</code> (Linearphase) beeinflussen Ringing und Latenz. <strong>1×</strong>: Ausgangsrate gleich Eingangsrate; <strong>N×</strong>: ganzzahliges Upsampling vor SDM — höhere CPU-Last.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">Filter / Konzept</th><th scope="col">CPU / subjektiv</th><th scope="col">Typisches Szenario</th></tr></thead><tbody><tr><td><code>1×</code></td><td>Leichter</td><td>PCM/DSD-Rate vor SDM unverändert — gut zum Testen der CPU-Reserve.</td></tr><tr><td><code>N×</code> (2×/4×/…)</td><td>Schwerer</td><td>Upsampling vor Noise Shaping — Tap-Länge und CPU abstimmen.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>Kürzeste Taps</td><td>Einstiegs-CPUs; stabile Wiedergabe zuerst.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>Mittel-langes XL-Fenster</td><td>Täglicher Kompromiss auf Mittelklasse-CPU.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>Langes Sinc</td><td>Wenn Thermik und Puffer mitmachen.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>Schwerste Gauss-Varianten</td><td>High-End-PCs / Apple Silicon, Ziel DSD512.</td></tr><tr><td>Minimal- vs. Linearphase</td><td>Latenz / Vorläuten</td><td><code>-mp</code> vs. <code>-lp</code> ändern den Impuls.</td></tr></tbody></table>',
-          dbTitle: "Interaktiv dB ↔ Spannungsverhältnis",
-          dbHint:
-            "Relativer Pegel ΔdB multipliziert die Amplitude mit 10<sup>ΔdB/20</sup>. +6 dB ≈ Spannung ×2; −6 dB ≈ ×0,5.",
-          dbLabel: "Pegeländerung ΔdB",
-          dbResultHtml: function (ratio, db) {
-            return (
-              "Δ = <strong>" +
-              db +
-              "</strong> dB → Spannung × <strong>" +
-              ratio.toFixed(5) +
-              "</strong>"
-            );
-          },
-          errDb: "Bitte eine gültige Zahl eingeben.",
-          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
-          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER",
-          errVoltage: "Bitte eine gültige nicht-negative Spannung eingeben.",
-          xlrResultHtml: function (v) {
-            return (
-              "Symmetrischer XLR ca. <strong>" +
-              v +
-              "</strong> V<sub>rms</sub> (RCA × 2)"
-            );
-          }
-        },
-        ar: {
-          htmlLang: "ar",
-          docTitle: "حاسبة الصوت الرقمي للهواة · Hi-End Lab",
-          langLabel: "اللغة",
-          navBrandText: "Hi-End Lab",
-          navTools: "الأدوات",
-          navKnowledge: "مقدّمة",
-          navRoon: "roon",
-          navDamping: "التخميد",
-          navCable: "الكابلات",
-          navHq: "المرشحات",
-          navDb: "ديسيبل",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "حاسبة الصوت الرقمي للهواة",
-          subtitle: "DSD · سماعات · كابلات · HQPlayer · المستوى",
-          dsdPanelTitle: "مستشار ترقية التصفية لـ DSD512",
-          cpuLabel: "فئة المعالج / SoC",
-          tierEntry: "مبتدئ: Intel i3 / Apple M1",
-          tierMid: "متوسط: Intel i5 / Apple M2",
-          tierUpper: "فوق المتوسط: Intel i7 / Apple M2 Pro",
-          tierHigh: "مرتفع: Intel i9 / Apple M3 Max",
-          dsdHint:
-            "يُقدَّر حمل مرشحات HQPlayer وتشكيل الضجيج حسب فئة المعالج — اضبط يدويًا عند تقطيع التشغيل.",
-          hqEntry:
-            "فضّل حملًا أخف: <strong>poly-sinc-short-mp</strong> أو <strong>poly-sinc-xla</strong> أقصر مع <strong>AMSDM7 256+fs</strong>. إن بقي الثقيل، استهدف <strong>DSD256</strong> أولًا — ثبّت التشغيل والخلفية الصوتية.",
-          hqMid:
-            "جرّب <strong>poly-sinc-xla</strong> مع <strong>AMSDM7 512+fs</strong>. إن سمحت المعالج، تصعّد نحو مرشحات أثقل أو أقرب إلى <strong>DSD512</strong>؛ راقب التقطيع وحرارة الجهاز.",
-          hqUpper:
-            "غالبًا ما يقابل <strong>Intel Core i7</strong> (نوى هجينة <strong>P+E</strong>) أو <strong>Apple M2 Pro</strong> (نحو <strong>10–12</strong> نواة). خط أساس: <strong>poly-sinc-xla</strong> أو <strong>poly-sinc-long-hp</strong> مع <strong>AMSDM7 512+fs</strong>. إن بقي الحمل تحت ~<strong>65–75%</strong> أثناء التشغيل، جرّب <strong>poly-sinc-gauss-long-hp</strong> نحو <strong>DSD512</strong>؛ ابدأ SDM عند <strong>AMSDM7EC 256+fs</strong> ثم <strong>512+fs</strong>. اجعل تخزين HQPlayer نحو <strong>100–250 ms</strong> (حسب التعريف).",
-          hqHigh:
-            "لـ <strong>DSD512</strong> كاملًا: <strong>poly-sinc-gauss-xla</strong> مع <strong>AMSDM7EC 512+fs</strong>. تأكد من التبريد والطاقة؛ راجعbuffers لـ ASIO/CoreAudio لكل معدل عيّنة.",
-          xlrPanelTitle: "تحويل مستوى XLR مقابل RCA",
-          rcaLabelHtml: 'خرج RCA غير متوازن (V<sub>rms</sub>)',
-          rcaHint: "معيار CD/DAC غير المتوازن نحو 2 V<sub>rms</sub>.",
-          btnCalc: "احسب خرج XLR المتوازن",
-          xlrNote:
-            "استخدام XLR في السلسلة يحسن الديناميكيا ويرفض الضجيج المشترك.",
-          connectorDiagramTitle: "توصيل الأطراف",
-          connectorLegendHtml:
-            '<div class="legend-block"><strong>RCA (غير متوازن)</strong><br />الطرف المركزي (Tip): الإشارة · الغلاف (Sleeve): الأرضي والحماية</div><div class="legend-block"><strong>XLR ثلاثي الأطراف (متوازن)</strong><br />الطرف 1: أرضي/حماية · الطرف 2: ساخن (+) · الطرف 3: بارد (−). الرسم تقريبي لمواجهة المقبس؛ راجع دليل الجهاز.</div>',
-          dampingTitle: "عامل تخميد السماعة (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>سماعة</sub> ÷ Z<sub>خرج المضخّم</sub>. زيادة مقاومة الخرج تخفض DF وقد تضعف ضبط الجهير.",
-          dampingHpLabel: "مقاومة السماعة (Ω)",
-          dampingAmpLabel: "مقاومة خرج المضخّم (Ω)",
-          btnDamping: "احسب DF",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(مثالي 0 Ω)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
-          },
-          dampingResultExplain:
-            "غالبًا يُذكر DF > 8 كمرجع؛ الصوت الفعلي يعتمد على السائق وشبكة التخميد.",
-          errDamping: "أدخل مقاومات صالحة (السماعة > 0، الخرج ≥ 0).",
-          cableTitle: "طول الكابلة — فقدان المستوى (تقدير)",
-          cableHint:
-            "نموذج مقاومي مبسّط لخطوط المستوى الطويلة؛ وليس محاكاة خط نقل.",
-          cableLenLabel: "طول الكابلة (م)",
-          cablePresetLabel: "نحاس ≈ Ω لكل موصل / م",
-          cablePresetHeavy: "~0.12 Ω/m · أرفع / أطول",
-          cablePresetMid: "~0.08 Ω/m · كابل استوديو نموذجي",
-          cablePresetLight: "~0.04 Ω/m · أسمن / أقصر",
-          cableLoadLabel: "معاوقة الحمل Z (Ω)",
-          cableModelHint:
-            "نموذج تسلسلي: R<sub>سلك</sub> ≈ 2 × الطول × Ω/م (ذهاب وإياب). الخسارة<sub>dB</sub> = 20·log<sub>10</sub>(Z<sub>حمل</sub> / (Z<sub>حمل</sub> + R<sub>سلك</sub>)).",
-          btnCable: "قدّر الإضعاف",
-          cableResultHtml: function (lossDb, ratioV, rWire) {
-            return (
-              "≈ <strong>" +
-              lossDb.toFixed(3) +
-              "</strong> dB · نسبة الجهد <strong>" +
-              ratioV.toFixed(5) +
-              "</strong> · R<sub>سلك</sub> ≈ <strong>" +
-              rWire.toFixed(2) +
-              "</strong> Ω"
-            );
-          },
-          cableResultExplain:
-            "عند Z<sub>حمل</sub> عالٍ (مداخل خطية) يكون الفقد صغيرًا ما لم يكن الكبل طويلًا جدًا ورفيعًا. للتركيبات الجادة استخدم جداول AWG.",
-          errCable: "أدخل طولًا ≥ 0 وقيمة Ω/م صالحة وحملًا > 0.",
-          hqFilterTitle: "مقارنة مرشحات HQPlayer (مرجع)",
-          hqFilterIntro:
-            "نظرة تعليمية؛ تختلف البناءات. اللاحقة <code>-mp</code> (أقلّ طورًا) مقابل <code>-lp</code> (طور خطي) تغيّر الرنين/الزمن. <strong>1×</strong> معدّل الخرج = المدخل؛ <strong>N×</strong> ترقية صحيحة قبل SDM — أثقل على المعالج.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">مرشح / مفهوم</th><th scope="col">الحمل</th><th scope="col">سيناريو تقليدي</th></tr></thead><tbody><tr><td><code>1×</code></td><td>أخف</td><td>بدون تغيير المعدّل قبل SDM — يتحقق من رصيد المعالج.</td></tr><tr><td><code>N×</code></td><td>أثقل</td><td>ترقية ثم تشكيل ضجيج — طابق طول التاب مع المعالج.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>أخف تابات</td><td>أجهزة دخول؛ استقرار التشغيل أولًا.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>متوسط</td><td>توازن يومي على معالج متوسط.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>sinc طويل</td><td>إن سمحت الحرارة والمخزن المؤقت.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>الأثقل</td><td>أجهزة قوية؛ هدف DSD512.</td></tr><tr><td>أقلّ طور / طور خطي</td><td>زمن / رنين مسبق</td><td><code>-mp</code> و <code>-lp</code> يغيران الاستجابة النبضية.</td></tr></tbody></table>',
-          dbTitle: "تفاعلي: ديسيبل ↔ نسبة الجهد",
-          dbHint:
-            "ΔdB النسبي يضرب السعة بـ 10<sup>ΔdB/20</sup>. +6 dB ≈ ضعف الجهد؛ −6 dB ≈ النصف.",
-          dbLabel: "تغيير المستوى ΔdB",
-          dbResultHtml: function (ratio, db) {
-            return (
-              "Δ = <strong>" +
-              db +
-              "</strong> dB → الجهد × <strong>" +
-              ratio.toFixed(5) +
-              "</strong>"
-            );
-          },
-          errDb: "أدخل رقمًا صالحًا.",
-          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
-          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER",
-          errVoltage: "أدخل جهدًا غير سالبًا صالحًا.",
-          xlrResultHtml: function (v) {
-            return (
-              "XLR المتوازن ≈ <strong>" +
-              v +
-              "</strong> V<sub>rms</sub> (RCA × 2)"
-            );
-          }
+          xlrProgressHint:
+            "⚡ 推力直接翻倍！转动相同的音量旋钮，您会听到更饱满的力量，且背景杂音完全消失。"
         }
-
       };
 
       function getStrings(lang) {
@@ -925,10 +645,7 @@
           "lang-en",
           "lang-ja",
           "lang-zh-CN",
-          "lang-zh-TW",
-          "lang-ru",
-          "lang-de",
-          "lang-ar"
+          "lang-zh-TW"
         );
         document.body.classList.add("lang-" + lang);
       }
@@ -955,12 +672,13 @@
         if (!STRINGS[lang]) lang = DEFAULT_LANG;
         currentLang = lang;
         setBodyLangClass(lang);
-        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.dir = "ltr";
         var L = getStrings(lang);
         document.documentElement.lang = L.htmlLang;
         document.title = L.docTitle;
 
         document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-roon-hqp").textContent = L.navRoonHqp;
         document.getElementById("nav-link-tools").textContent = L.navTools;
         document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
         document.getElementById("nav-roon").textContent = L.navRoon;
@@ -981,6 +699,7 @@
         document.getElementById("rca-hint").innerHTML = L.rcaHint;
         document.getElementById("btn-calc").textContent = L.btnCalc;
         document.getElementById("xlr-note").textContent = L.xlrNote;
+        document.getElementById("xlr-progress-hint").textContent = L.xlrProgressHint;
 
         document.getElementById("connector-chart-title").textContent = L.connectorDiagramTitle;
         document.getElementById("connector-legend").innerHTML = L.connectorLegendHtml;
@@ -1068,9 +787,13 @@
 
       function resetXlrResultForLangChange() {
         var box = document.getElementById("xlr-result");
+        var bars = document.getElementById("xlr-volt-bars");
         box.hidden = true;
+        bars.hidden = true;
         document.getElementById("xlr-value").textContent = "";
         document.getElementById("xlr-value").style.color = "";
+        document.getElementById("xlr-bar-rca-caption").innerHTML = "";
+        document.getElementById("xlr-bar-xlr-caption").innerHTML = "";
       }
 
       tierEl.addEventListener("change", renderDsd);
@@ -1080,22 +803,33 @@
       var xlrResult = document.getElementById("xlr-result");
       var xlrValue = document.getElementById("xlr-value");
       var xlrNote = document.getElementById("xlr-note");
+      var xlrVoltBars = document.getElementById("xlr-volt-bars");
+      var xlrBarRcaCaption = document.getElementById("xlr-bar-rca-caption");
+      var xlrBarXlrCaption = document.getElementById("xlr-bar-xlr-caption");
+      var xlrProgressHint = document.getElementById("xlr-progress-hint");
 
       btnCalc.addEventListener("click", function () {
         var L = getStrings(currentLang);
         var raw = parseFloat(rcaInput.value, 10);
         if (Number.isNaN(raw) || raw < 0) {
           xlrResult.hidden = false;
+          xlrVoltBars.hidden = true;
           xlrNote.hidden = true;
           xlrValue.textContent = L.errVoltage;
           xlrValue.style.color = "#c9a962";
           return;
         }
         var xlr = raw * 2;
+        var rcaStr = raw.toFixed(2);
+        var xlrStr = xlr.toFixed(2);
         xlrResult.hidden = false;
+        xlrVoltBars.hidden = false;
         xlrNote.hidden = false;
         xlrValue.style.color = "";
-        xlrValue.innerHTML = L.xlrResultHtml(xlr.toFixed(2));
+        xlrValue.innerHTML = L.xlrResultHtml(xlrStr);
+        xlrBarRcaCaption.innerHTML = L.xlrBarRcaCaptionHtml(rcaStr);
+        xlrBarXlrCaption.innerHTML = L.xlrBarXlrCaptionHtml(xlrStr);
+        xlrProgressHint.textContent = L.xlrProgressHint;
         xlrNote.textContent = L.xlrNote;
       });
 

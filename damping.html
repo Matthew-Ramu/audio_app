@@ -6,7 +6,7 @@
   <title></title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="hiend-common.css" />
 </head>
 <body class="lang-zh-TW">
@@ -14,6 +14,7 @@
     <div class="site-nav-inner">
       <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
       <div class="nav-links">
+        <a href="roon-hqp-guide.html" id="nav-roon-hqp"></a>
         <a href="index.html#section-tools" id="nav-link-tools"></a>
         <a href="damping.html" id="nav-damping" class="is-current" aria-current="page"></a>
         <a href="cable.html" id="nav-cable"></a>
@@ -26,12 +27,9 @@
         <label for="lang-select" id="i18n-lang-label"></label>
         <select id="lang-select" aria-label="Language">
           <option value="en">English</option>
-          <option value="de">Deutsch</option>
-          <option value="ru">Русский</option>
-          <option value="ar">العربية</option>
           <option value="ja">日本語</option>
           <option value="zh-CN">中文（简体）</option>
-          <option value="zh-TW">中文（繁體）</option>
+          <option value="zh-TW" selected>中文（繁體）</option>
         </select>
       </div>
     </div>
@@ -80,14 +78,15 @@
           navTools: "Tools",
           navKnowledge: "Primer",
           navRoon: "roon",
+          navRoonHqp: "Roon + HQPlayer setup",
           navDamping: "DF",
           navCable: "Cable",
           navHq: "Filters",
           navDb: "dB",
           brandLine: "Hi-End Digital Audio Lab",
+          dampingTitle: "Headphone damping factor",
           footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
           footerNote: "REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER",
-          dampingTitle: "Headphone damping factor",
           dampingHint: "DF ≈ Z<sub>headphone</sub> ÷ Z<sub>out(amp)</sub>. Higher amplifier output impedance lowers DF and can loosen bass control.",
           dampingHpLabel: "Headphone impedance (Ω)",
           dampingAmpLabel: "Amplifier output Z (Ω)",
@@ -107,14 +106,15 @@
           navTools: "ツール",
           navKnowledge: "解説",
           navRoon: "roon",
+          navRoonHqp: "Roon＋HQPlayer 設定",
           navDamping: "DF",
           navCable: "ケーブル",
           navHq: "フィルタ",
           navDb: "dB",
           brandLine: "Hi-End Digital Audio Lab",
+          dampingTitle: "ヘッドホン・ダンピングファクター（DF）",
           footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
           footerNote: "参考ツール · HQPLAYER 非関連",
-          dampingTitle: "ヘッドホン・ダンピングファクター（DF）",
           dampingHint: "DF ≈ Z<sub>ヘッドホン</sub> ÷ アンプの出力インピーダンス。出力 Z が高いほど DF は下がり、低音の制動が甘くなることがあります。",
           dampingHpLabel: "ヘッドホンインピーダンス（Ω）",
           dampingAmpLabel: "アンプ出力インピーダンス（Ω）",
@@ -134,14 +134,15 @@
           navTools: "计算工具",
           navKnowledge: "知识科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 设置",
           navDamping: "阻尼",
           navCable: "线材",
           navHq: "滤波表",
           navDb: "分贝",
           brandLine: "Hi-End Digital Audio Lab",
+          dampingTitle: "阻抗匹配 · 阻尼系数（DF）",
           footerCopy: "音响工程师的数字工具箱 © 2024",
           footerNote: "参考工具 · 与 HQPLAYER 无关联",
-          dampingTitle: "阻抗匹配 · 阻尼系数（DF）",
           dampingHint: "DF ≈ 耳机阻抗 ÷ 放大器输出阻抗。输出阻抗越高，DF 越低，低频控制力可能变差。",
           dampingHpLabel: "耳机阻抗（Ω）",
           dampingAmpLabel: "放大器输出阻抗（Ω）",
@@ -161,14 +162,15 @@
           navTools: "計算工具",
           navKnowledge: "知識科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 設定",
           navDamping: "阻尼",
           navCable: "線材",
           navHq: "濾波表",
           navDb: "分貝",
           brandLine: "Hi-End Digital Audio Lab",
+          dampingTitle: "阻抗匹配 · 阻尼係數（DF）",
           footerCopy: "音響工程師的數位工具箱 © 2024",
           footerNote: "參考工具 · 與 HQPLAYER 無商業關聯",
-          dampingTitle: "阻抗匹配 · 阻尼係數（DF）",
           dampingHint: "DF ≈ 耳機阻抗 ÷ 擴大機輸出阻抗。輸出阻抗越高，DF 越低，低頻控制力可能變差。",
           dampingHpLabel: "耳機阻抗（Ω）",
           dampingAmpLabel: "擴大機輸出阻抗（Ω）",
@@ -181,103 +183,12 @@
           errDamping: "請輸入有效阻抗（耳機須為正數，輸出須≥0）。",
         },
 
-        ru: {
-          htmlLang: "ru",
-          docTitle: "Демпфирование наушников (DF) · Hi-End Lab",
-          langLabel: "Язык",
-          navBrandText: "Hi-End Lab",
-          navTools: "Инструменты",
-          navKnowledge: "Обзор",
-          navRoon: "roon",
-          navDamping: "Демпф.",
-          navCable: "Кабель",
-          navHq: "Фильтры",
-          navDb: "дБ",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "Цифровой набор инженера по звуку © 2024",
-          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER",
-          dampingTitle: "Демпфирование наушников (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>наушники</sub> ÷ Z<sub>вых.усилителя</sub>. Выше выходной импеданс усилителя — ниже DF и слабее контроль НЧ.",
-          dampingHpLabel: "Импеданс наушников (Ω)",
-          dampingAmpLabel: "Выходной Z усилителя (Ω)",
-          btnDamping: "Рассчитать DF",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(идеал: 0 Ω)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
-          },
-          dampingResultExplain:
-            "Часто упоминают DF > 8 как ориентир; реальный звук зависит от драйвера и схемы демпфирования.",
-          errDamping: "Введите корректные импедансы (наушники > 0, выход ≥ 0)."
-        },
-        de: {
-          htmlLang: "de",
-          docTitle: "Kopfhörer-Dämpfungsfaktor · Hi-End Lab",
-          langLabel: "Sprache",
-          navBrandText: "Hi-End Lab",
-          navTools: "Werkzeuge",
-          navKnowledge: "Grundlagen",
-          navRoon: "roon",
-          navDamping: "Dämpfung",
-          navCable: "Kabel",
-          navHq: "Filter",
-          navDb: "dB",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
-          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER",
-          dampingTitle: "Kopfhörer-Dämpfungsfaktor (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>Kopfhörer</sub> ÷ Z<sub>Ausgang(Verstärker)</sub>. Höherer Ausgangswiderstand senkt DF und kann Bass-Kontrolle lockern.",
-          dampingHpLabel: "Kopfhörerimpedanz (Ω)",
-          dampingAmpLabel: "Ausgangsimpedanz Verstärker (Ω)",
-          btnDamping: "DF berechnen",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(ideal 0 Ω Quelle)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
-          },
-          dampingResultExplain:
-            "Faustregel: DF > 8 wird oft genannt; der Klang hängt vom Treiber und der Dämpfung ab.",
-          errDamping: "Gültige Impedanzen eingeben (Kopfhörer > 0, Ausgang ≥ 0)."
-        },
-        ar: {
-          htmlLang: "ar",
-          docTitle: "عامل تخميد السماعة · Hi-End Lab",
-          langLabel: "اللغة",
-          navBrandText: "Hi-End Lab",
-          navTools: "الأدوات",
-          navKnowledge: "مقدّمة",
-          navRoon: "roon",
-          navDamping: "التخميد",
-          navCable: "الكابلات",
-          navHq: "المرشحات",
-          navDb: "ديسيبل",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
-          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER",
-          dampingTitle: "عامل تخميد السماعة (DF)",
-          dampingHint:
-            "DF ≈ Z<sub>سماعة</sub> ÷ Z<sub>خرج المضخّم</sub>. زيادة مقاومة الخرج تخفض DF وقد تضعف ضبط الجهير.",
-          dampingHpLabel: "مقاومة السماعة (Ω)",
-          dampingAmpLabel: "مقاومة خرج المضخّم (Ω)",
-          btnDamping: "احسب DF",
-          dampingIdealHtml:
-            'DF → <strong>∞</strong> <span style="opacity:.75">(مثالي 0 Ω)</span>',
-          dampingResultHtml: function (df) {
-            return "DF ≈ <strong>" + df.toFixed(2) + "</strong>";
-          },
-          dampingResultExplain:
-            "غالبًا يُذكر DF > 8 كمرجع؛ الصوت الفعلي يعتمد على السائق وشبكة التخميد.",
-          errDamping: "أدخل مقاومات صالحة (السماعة > 0، الخرج ≥ 0)."
-        }
-
       };
       function getStrings(lang) {
         return STRINGS[lang] || STRINGS[DEFAULT_LANG];
       }
       function setBodyLangClass(lang) {
-        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW", "lang-de", "lang-ru", "lang-ar");
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW");
         document.body.classList.add("lang-" + lang);
       }
       var langSelect = document.getElementById("lang-select");
@@ -287,11 +198,12 @@
         if (!STRINGS[lang]) lang = DEFAULT_LANG;
         currentLang = lang;
         setBodyLangClass(lang);
-        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.dir = "ltr";
         var L = getStrings(lang);
         document.documentElement.lang = L.htmlLang;
         document.title = L.docTitle;
         document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-roon-hqp").textContent = L.navRoonHqp;
         document.getElementById("nav-link-tools").textContent = L.navTools;
         document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
         document.getElementById("nav-roon").textContent = L.navRoon;

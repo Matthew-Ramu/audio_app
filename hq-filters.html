@@ -6,7 +6,7 @@
   <title></title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="hiend-common.css" />
 </head>
 <body class="lang-zh-TW">
@@ -14,6 +14,7 @@
     <div class="site-nav-inner">
       <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
       <div class="nav-links">
+        <a href="roon-hqp-guide.html" id="nav-roon-hqp"></a>
         <a href="index.html#section-tools" id="nav-link-tools"></a>
         <a href="damping.html" id="nav-damping"></a>
         <a href="cable.html" id="nav-cable"></a>
@@ -26,12 +27,9 @@
         <label for="lang-select" id="i18n-lang-label"></label>
         <select id="lang-select" aria-label="Language">
           <option value="en">English</option>
-          <option value="de">Deutsch</option>
-          <option value="ru">Русский</option>
-          <option value="ar">العربية</option>
           <option value="ja">日本語</option>
           <option value="zh-CN">中文（简体）</option>
-          <option value="zh-TW">中文（繁體）</option>
+          <option value="zh-TW" selected>中文（繁體）</option>
         </select>
       </div>
     </div>
@@ -66,14 +64,15 @@
           navTools: "Tools",
           navKnowledge: "Primer",
           navRoon: "roon",
+          navRoonHqp: "Roon + HQPlayer setup",
           navDamping: "DF",
           navCable: "Cable",
           navHq: "Filters",
           navDb: "dB",
           brandLine: "Hi-End Digital Audio Lab",
+          hqFilterTitle: "HQPlayer filter comparison (reference)",
           footerCopy: "Sound Engineer’s Digital Toolbox © 2024",
           footerNote: "REFERENCE TOOL · NOT AFFILIATED WITH HQPLAYER",
-          hqFilterTitle: "HQPlayer filter comparison (reference)",
           hqFilterIntro: "Educational overview — builds differ. Suffixes such as <code>-mp</code> (minimum phase) vs <code>-lp</code> (linear phase) change ringing vs latency. <strong>1×</strong> = output rate equals input rate for that conversion stage; <strong>N×</strong> = integer upsampling (2×/4×/…) before SDM, heavier CPU but more freedom for the sinc stages.",
           hqFilterTableHtml: "<table class=\"hq-compare-table\"><thead><tr><th scope=\"col\">Filter / concept</th><th scope=\"col\">CPU / rate feel</th><th scope=\"col\">Typical scenario</th></tr></thead><tbody><tr><td><code>1×</code> processing</td><td>Lighter interpolation load</td><td>When you keep PCM/DSD rate unchanged before SDM — good for CPU headroom checks.</td></tr><tr><td><code>N×</code> (2×/4×/…)</td><td>Heavier; enables sharper reconstruction</td><td>Upsampling prior to noise shaping — pair tap length with your CPU tier.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>Short taps · lowest load</td><td>Laptops / entry CPUs; prioritize dropout‑free playback.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>Medium‑long XL window</td><td>Balanced daily driver on mid‑tier CPUs.</td></tr><tr><td><code>poly-sinc-long-hp</code> / long variants</td><td>Long sinc · cleaner HF roll‑off</td><td>When thermals & buffers allow longer convolution.</td></tr><tr><td><code>poly-sinc-gauss-*</code> family</td><td>Gaussian‑weighted sinc · heaviest</td><td>High‑end PCs / Apple Silicon — chase maximum finesse at DSD512 class targets.</td></tr><tr><td>Minimum vs linear phase</td><td>Latency / pre‑ringing trade‑offs</td><td><code>-mp</code> trades pre‑ring for impulse asymmetry; <code>-lp</code> keeps symmetric impulse at cost of latency.</td></tr></tbody></table>",
         },
@@ -85,14 +84,15 @@
           navTools: "ツール",
           navKnowledge: "解説",
           navRoon: "roon",
+          navRoonHqp: "Roon＋HQPlayer 設定",
           navDamping: "DF",
           navCable: "ケーブル",
           navHq: "フィルタ",
           navDb: "dB",
           brandLine: "Hi-End Digital Audio Lab",
+          hqFilterTitle: "HQPlayer フィルタ対照（参考）",
           footerCopy: "音響エンジニアのデジタル・ツールボックス © 2024",
           footerNote: "参考ツール · HQPLAYER 非関連",
-          hqFilterTitle: "HQPlayer フィルタ対照（参考）",
           hqFilterIntro: "概要のみ — ビルドにより名称が異なります。<strong>1×</strong> は出力レートが入力と同段の処理、<strong>N×</strong> は整数アップサンプル後に SDM へ送る重い経路です。",
           hqFilterTableHtml: "<table class=\"hq-compare-table\"><thead><tr><th scope=\"col\">フィルタ／概念</th><th scope=\"col\">負荷感</th><th scope=\"col\">用途イメージ</th></tr></thead><tbody><tr><td><code>1×</code></td><td>軽め</td><td>レートを変えず SDM へ — CPU に余裕を確認。</td></tr><tr><td><code>N×</code>（2×/4×…）</td><td>重い</td><td>アップサンプル後にノイズシェイピング — タップ長と CPU をセットで調整。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短タップ</td><td>エントリー機／安定再生優先。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中〜長 XL</td><td>ミドル帯のバランス設定。</td></tr><tr><td><code>poly-sinc-long-hp</code> 系</td><td>長い sinc</td><td>熱・バッファに余裕があるとき。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>ガウス系 · 最重負荷</td><td>ハイエンド CPU で DSD 高倍率を狙うとき。</td></tr><tr><td>最小位相／線形位相</td><td>遅延・プリリンギングのトレード</td><td><code>-mp</code> と <code>-lp</code> でインパルス特性が変わります。</td></tr></tbody></table>",
         },
@@ -104,14 +104,15 @@
           navTools: "计算工具",
           navKnowledge: "知识科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 设置",
           navDamping: "阻尼",
           navCable: "线材",
           navHq: "滤波表",
           navDb: "分贝",
           brandLine: "Hi-End Digital Audio Lab",
+          hqFilterTitle: "HQPlayer 滤波器对照表（参考）",
           footerCopy: "音响工程师的数字工具箱 © 2024",
           footerNote: "参考工具 · 与 HQPLAYER 无关联",
-          hqFilterTitle: "HQPlayer 滤波器对照表（参考）",
           hqFilterIntro: "教学向摘要；版本差异大。<strong>1×</strong> 表示该阶段输出采样率与输入相同；<strong>N×</strong> 表示先做整数倍升频再送 SDM，CPU 负载更高但滤波自由度更大。",
           hqFilterTableHtml: "<table class=\"hq-compare-table\"><thead><tr><th scope=\"col\">滤波／概念</th><th scope=\"col\">负载感</th><th scope=\"col\">适用场景（经验）</th></tr></thead><tbody><tr><td><code>1×</code></td><td>较轻</td><td>不改速率直接噪声整形 — 省 CPU、先求稳定。</td></tr><tr><td><code>N×</code>（2×／4×…）</td><td>较重</td><td>升频后再 SDM — 与 CPU 档位、缓冲联动调节。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短抽头</td><td>入门算力、长时间播放优先流畅。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中长 XL</td><td>中端 CPU 的日常平衡选项。</td></tr><tr><td><code>poly-sinc-long-hp</code> 等</td><td>长 sinc</td><td>散热与缓冲有余量时再开。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>高斯窗 · 最重</td><td>旗舰算力、追求高倍率 DSD 路径。</td></tr><tr><td>最小相位／线性相位</td><td>预铃／延迟取舍</td><td><code>-mp</code> 与 <code>-lp</code> 影响脉冲响应形状。</td></tr></tbody></table>",
         },
@@ -123,88 +124,25 @@
           navTools: "計算工具",
           navKnowledge: "知識科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 設定",
           navDamping: "阻尼",
           navCable: "線材",
           navHq: "濾波表",
           navDb: "分貝",
           brandLine: "Hi-End Digital Audio Lab",
+          hqFilterTitle: "HQPlayer 濾波器對照表（參考）",
           footerCopy: "音響工程師的數位工具箱 © 2024",
           footerNote: "參考工具 · 與 HQPLAYER 無商業關聯",
-          hqFilterTitle: "HQPlayer 濾波器對照表（參考）",
-          hqFilterIntro: "教學向摘要；版本差異大。<strong>1×</strong> 表示該階段輸出取樣率與輸入相同；<strong>N×</strong> 表示先做整數倍升頻再送 SDM，CPU 較重但濾波自由度較大。",
-          hqFilterTableHtml: "<table class=\"hq-compare-table\"><thead><tr><th scope=\"col\">濾波／概念</th><th scope=\"col\">負載感</th><th scope=\"col\">適用情境（經驗）</th></tr></thead><tbody><tr><td><code>1×</code></td><td>較輕</td><td>不改速率直接噪聲整形 — 省算力、先求穩定播放。</td></tr><tr><td><code>N×</code>（2×／4×…）</td><td>較重</td><td>升頻後再 SDM — 與 CPU 等級、緩衝一起調。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短抽頭</td><td>入門算力、長時間聆聽優先流暢。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中長 XL</td><td>中階 CPU 的日常平衡選項。</td></tr><tr><td><code>poly-sinc-long-hp</code> 等</td><td>長 sinc</td><td>散熱與緩衝有餘裕再開。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>高斯窗 · 最重</td><td>旗艦算力、追求高倍率 DSD 路徑。</td></tr><tr><td>最小相位／線性相位</td><td>預鈴／延遲取捨</td><td><code>-mp</code> 與 <code>-lp</code> 影響脈衝響應形狀。</td></tr></tbody></table>",
+          hqFilterIntro: "教學向摘要；版本差異大。<strong>1×</strong> 表示該階段輸出取樣率與輸入相同；<strong>N×</strong> 表示先做整數倍升頻再送 SDM，CPU 負載更高但濾波自由度更大。",
+          hqFilterTableHtml: "<table class=\"hq-compare-table\"><thead><tr><th scope=\"col\">濾波／概念</th><th scope=\"col\">負載感</th><th scope=\"col\">適用場景（經驗）</th></tr></thead><tbody><tr><td><code>1×</code></td><td>較輕</td><td>不改速率直接雜訊整形 — 省 CPU、先求穩定。</td></tr><tr><td><code>N×</code>（2×／4×…）</td><td>較重</td><td>升頻後再 SDM — 與 CPU 檔位、緩衝聯動調節。</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>最短抽頭</td><td>入門算力、長時間播放優先流暢。</td></tr><tr><td><code>poly-sinc-xla</code></td><td>中長 XL</td><td>中端 CPU 的日常平衡選項。</td></tr><tr><td><code>poly-sinc-long-hp</code> 等</td><td>長 sinc</td><td>散熱與緩衝有餘量時再開。</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>高斯窗 · 最重</td><td>旗艦算力、追求高倍率 DSD 路徑。</td></tr><tr><td>最小相位／線性相位</td><td>預鈴／延遲取捨</td><td><code>-mp</code> 與 <code>-lp</code> 影響脈衝響應形狀。</td></tr></tbody></table>",
         },
-
-        ru: {
-          htmlLang: "ru",
-          docTitle: "Сравнение фильтров HQPlayer · Hi-End Lab",
-          langLabel: "Язык",
-          navBrandText: "Hi-End Lab",
-          navTools: "Инструменты",
-          navKnowledge: "Обзор",
-          navRoon: "roon",
-          navDamping: "Демпф.",
-          navCable: "Кабель",
-          navHq: "Фильтры",
-          navDb: "дБ",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "Цифровой набор инженера по звуку © 2024",
-          footerNote: "СПРАВОЧНЫЙ ИНСТРУМЕНТ · НЕ СВЯЗАН С HQPLAYER",
-          hqFilterTitle: "Сравнение фильтров HQPlayer (справочно)",
-          hqFilterIntro:
-            "Учебный обзор; сборки отличаются. Суффиксы <code>-mp</code> (минимальная фаза) и <code>-lp</code> (линейная фаза) меняют звон/задержку. <strong>1×</strong> — выходная частота равна входной на этапе; <strong>N×</strong> — целочисленный апсемплинг перед SDM, тяжелее для CPU.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">Фильтр / концепция</th><th scope="col">Нагрузка</th><th scope="col">Типичный сценарий</th></tr></thead><tbody><tr><td><code>1×</code></td><td>Легче</td><td>Без смены частоты до SDM — проверка запаса CPU.</td></tr><tr><td><code>N×</code> (2×/4×/…)</td><td>Тяжелее</td><td>Апсемплинг перед шумоподавлением — согласуйте длину sinc с CPU.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>Самый лёгкий</td><td>Ноутбуки / слабые CPU; без дропаутов.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>Средняя</td><td>Баланс на «среднем» CPU.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>Длинный sinc</td><td>Если термалы и буфер позволяют.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>Максимум</td><td>Топовые ПК / Apple Silicon, цель DSD512.</td></tr><tr><td>Мин. фаза / лин. фаза</td><td>Задержка / предзвон</td><td><code>-mp</code> и <code>-lp</code> меняют импульсный отклик.</td></tr></tbody></table>'
-        },
-        de: {
-          htmlLang: "de",
-          docTitle: "HQPlayer-Filtervergleich · Hi-End Lab",
-          langLabel: "Sprache",
-          navBrandText: "Hi-End Lab",
-          navTools: "Werkzeuge",
-          navKnowledge: "Grundlagen",
-          navRoon: "roon",
-          navDamping: "Dämpfung",
-          navCable: "Kabel",
-          navHq: "Filter",
-          navDb: "dB",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
-          footerNote: "REFERENZTOOL · KEINE VERBINDUNG ZU HQPLAYER",
-          hqFilterTitle: "HQPlayer-Filtervergleich (Referenz)",
-          hqFilterIntro:
-            "Überblick zu Bildungszwecken; Builds unterscheiden sich. Suffixe wie <code>-mp</code> (Minimalphase) vs. <code>-lp</code> (Linearphase) beeinflussen Ringing und Latenz. <strong>1×</strong>: Ausgangsrate gleich Eingangsrate; <strong>N×</strong>: ganzzahliges Upsampling vor SDM — höhere CPU-Last.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">Filter / Konzept</th><th scope="col">CPU / subjektiv</th><th scope="col">Typisches Szenario</th></tr></thead><tbody><tr><td><code>1×</code></td><td>Leichter</td><td>PCM/DSD-Rate vor SDM unverändert — gut zum Testen der CPU-Reserve.</td></tr><tr><td><code>N×</code> (2×/4×/…)</td><td>Schwerer</td><td>Upsampling vor Noise Shaping — Tap-Länge und CPU abstimmen.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>Kürzeste Taps</td><td>Einstiegs-CPUs; stabile Wiedergabe zuerst.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>Mittel-langes XL-Fenster</td><td>Täglicher Kompromiss auf Mittelklasse-CPU.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>Langes Sinc</td><td>Wenn Thermik und Puffer mitmachen.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>Schwerste Gauss-Varianten</td><td>High-End-PCs / Apple Silicon, Ziel DSD512.</td></tr><tr><td>Minimal- vs. Linearphase</td><td>Latenz / Vorläuten</td><td><code>-mp</code> vs. <code>-lp</code> ändern den Impuls.</td></tr></tbody></table>'
-        },
-        ar: {
-          htmlLang: "ar",
-          docTitle: "مقارنة مرشحات HQPlayer · Hi-End Lab",
-          langLabel: "اللغة",
-          navBrandText: "Hi-End Lab",
-          navTools: "الأدوات",
-          navKnowledge: "مقدّمة",
-          navRoon: "roon",
-          navDamping: "التخميد",
-          navCable: "الكابلات",
-          navHq: "المرشحات",
-          navDb: "ديسيبل",
-          brandLine: "Hi-End Digital Audio Lab",
-          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
-          footerNote: "أداة مرجعية · غير تابعة لـ HQPLAYER",
-          hqFilterTitle: "مقارنة مرشحات HQPlayer (مرجع)",
-          hqFilterIntro:
-            "نظرة تعليمية؛ تختلف البناءات. اللاحقة <code>-mp</code> (أقلّ طورًا) مقابل <code>-lp</code> (طور خطي) تغيّر الرنين/الزمن. <strong>1×</strong> معدّل الخرج = المدخل؛ <strong>N×</strong> ترقية صحيحة قبل SDM — أثقل على المعالج.",
-          hqFilterTableHtml:
-            '<table class="hq-compare-table" dir="ltr"><thead><tr><th scope="col">مرشح / مفهوم</th><th scope="col">الحمل</th><th scope="col">سيناريو تقليدي</th></tr></thead><tbody><tr><td><code>1×</code></td><td>أخف</td><td>بدون تغيير المعدّل قبل SDM — يتحقق من رصيد المعالج.</td></tr><tr><td><code>N×</code></td><td>أثقل</td><td>ترقية ثم تشكيل ضجيج — طابق طول التاب مع المعالج.</td></tr><tr><td><code>poly-sinc-short-mp</code></td><td>أخف تابات</td><td>أجهزة دخول؛ استقرار التشغيل أولًا.</td></tr><tr><td><code>poly-sinc-xla</code></td><td>متوسط</td><td>توازن يومي على معالج متوسط.</td></tr><tr><td><code>poly-sinc-long-hp</code></td><td>sinc طويل</td><td>إن سمحت الحرارة والمخزن المؤقت.</td></tr><tr><td><code>poly-sinc-gauss-*</code></td><td>الأثقل</td><td>أجهزة قوية؛ هدف DSD512.</td></tr><tr><td>أقلّ طور / طور خطي</td><td>زمن / رنين مسبق</td><td><code>-mp</code> و <code>-lp</code> يغيران الاستجابة النبضية.</td></tr></tbody></table>'
-        }
 
       };
       function getStrings(lang) {
         return STRINGS[lang] || STRINGS[DEFAULT_LANG];
       }
       function setBodyLangClass(lang) {
-        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW", "lang-de", "lang-ru", "lang-ar");
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW");
         document.body.classList.add("lang-" + lang);
       }
       var langSelect = document.getElementById("lang-select");
@@ -214,11 +152,12 @@
         if (!STRINGS[lang]) lang = DEFAULT_LANG;
         currentLang = lang;
         setBodyLangClass(lang);
-        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.dir = "ltr";
         var L = getStrings(lang);
         document.documentElement.lang = L.htmlLang;
         document.title = L.docTitle;
         document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-roon-hqp").textContent = L.navRoonHqp;
         document.getElementById("nav-link-tools").textContent = L.navTools;
         document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
         document.getElementById("nav-roon").textContent = L.navRoon;

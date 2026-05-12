@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roon 入門與 HQPlayer 串接 · Hi-End Lab</title>
+  <title>Roon 入門與 HQPlayer · Hi-End Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="hiend-common.css" />
 </head>
 <body class="lang-zh-TW">
@@ -14,6 +14,7 @@
     <div class="site-nav-inner">
       <a class="nav-brand" href="index.html#top" id="nav-brand-text"></a>
       <div class="nav-links">
+        <a href="roon-hqp-guide.html" id="nav-roon-hqp"></a>
         <a href="index.html#section-tools" id="nav-link-tools"></a>
         <a href="damping.html" id="nav-damping"></a>
         <a href="cable.html" id="nav-cable"></a>
@@ -26,12 +27,9 @@
         <label for="lang-select" id="i18n-lang-label"></label>
         <select id="lang-select" aria-label="Language">
           <option value="en">English</option>
-          <option value="de">Deutsch</option>
-          <option value="ru">Русский</option>
-          <option value="ar">العربية</option>
           <option value="ja">日本語</option>
           <option value="zh-CN">中文（简体）</option>
-          <option value="zh-TW">中文（繁體）</option>
+          <option value="zh-TW" selected>中文（繁體）</option>
         </select>
       </div>
     </div>
@@ -142,6 +140,7 @@
           navTools: "Tools",
           navKnowledge: "Primer",
           navRoon: "roon",
+          navRoonHqp: "Roon + HQPlayer setup",
           navDamping: "DF",
           navCable: "Cable",
           navHq: "Filters",
@@ -174,6 +173,7 @@
           navTools: "ツール",
           navKnowledge: "解説",
           navRoon: "roon",
+          navRoonHqp: "Roon＋HQPlayer 設定",
           navDamping: "DF",
           navCable: "ケーブル",
           navHq: "フィルタ",
@@ -206,6 +206,7 @@
           navTools: "计算工具",
           navKnowledge: "知识科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 设置",
           navDamping: "阻尼",
           navCable: "线材",
           navHq: "滤波表",
@@ -238,126 +239,31 @@
           navTools: "計算工具",
           navKnowledge: "知識科普",
           navRoon: "roon",
+          navRoonHqp: "roon+HQPlayer 設定",
           navDamping: "阻尼",
           navCable: "線材",
           navHq: "濾波表",
           navDb: "分貝",
           brandLine: "Hi-End Digital Audio Lab",
           pageTitle: "Roon · 基本操作、設定與 HQPlayer",
-          lead: "說明 Roon Core／Remote 的分工、常用設定項，以及把升頻／SDM 交給 HQPlayer 的實務思路。（介面隨版本而異，請以官方文件為準。）",
+          lead: "說明 Roon Core／Remote 的分工、常用設定項，以及把重取樣交給 HQPlayer 的實踐思路（介面隨版本變化，請以官方文件為準）。",
           titleBasics: "基本操作",
-          capBasics: "示意：資料庫式瀏覽，以及 Remote 遙控同一區網內的 Core。",
+          capBasics: "示意圖：資料庫式瀏覽與 Remote 遙控同一區域網路內的 Core。",
           bodyBasics:
-            "<p>Roon 由 <strong>Roon Core</strong>（音樂庫與播放引擎，可安裝於 PC、Mac、NAS 或 Roon OS 裝置）與 <strong>Roon Remote</strong>（手機／平板／另一台電腦上的遙控端）組成。</p><ul><li><strong>瀏覽與播放</strong>：依演出者、專輯、作曲者或標籤瀏覽；建立播放清單與書籤。</li><li><strong>Zones（播放區域）</strong>：選擇要輸出的裝置或群組（裝置需被 Core 辨識）。</li><li><strong>搜尋</strong>：整合本地檔案與已連結的串流服務（若已訂閱）。</li></ul><p>首次使用請確認 Core 已開機，且 Remote 與 Core 位於<strong>同一區網</strong>或可互相探索。</p>",
+            "<p>Roon 由 <strong>Roon Core</strong>（音樂庫與播放引擎，可裝在 PC、Mac、NAS 或專用設備）與 <strong>Roon Remote</strong>（手機／平板等遙控器）組成。</p><ul><li><strong>瀏覽與播放</strong>：按演出者、專輯、作曲者或標籤瀏覽；建立播放清單。</li><li><strong>Zones（播放區域）</strong>：選擇輸出裝置或群組。</li><li><strong>搜尋</strong>：整合本地曲庫與已綁定的串流服務（若已訂閱）。</li></ul><p>首次使用請確認 Core 已運行，且 Remote 與 Core 處於<strong>同一區域網路</strong>或可被發現。</p>",
           titleSettings: "設定要點",
-          capSettings: "示意：曲庫路徑、音訊裝置、選用之 DSP。",
+          capSettings: "示意圖：曲庫路徑、音訊裝置、可選 DSP。",
           bodySettings:
-            "<p>於 Remote 開啟 <strong>設定（Settings）</strong>：</p><ul><li><strong>Storage</strong>：新增音樂資料夾或 NAS／網路磁碟路徑；Core 會掃描並建立索引與詮釋資料。</li><li><strong>Audio</strong>：列出區網上可用的輸出；可為各 Zone 設定最高取樣率、位元深度與音量模式（硬體／數位／無調整）。</li><li><strong>DSP</strong>（選用）：EQ、音量平衡、濾波等—凡在數位域先處理的訊號，都會影響送往 HQPlayer 前的資料；若希望由 HQPlayer 負責升頻／SDM，請避免在 Roon 端<strong>重複</strong>做不必要的取樣率轉換。</li></ul><p>若同時開啟較重的 DSP 與高取樣率目標，請預留區網頻寬與 Core／HQPlayer 端 CPU 餘裕。</p>",
+            "<p>在 Remote 中打開 <strong>設定（Settings）</strong>：</p><ul><li><strong>Storage</strong>：新增音樂資料夾或網路路徑，由 Core 建立索引。</li><li><strong>Audio</strong>：啟用網路上的播放端；可為各 Zone 設定最高取樣率、位元深度與音量策略。</li><li><strong>DSP</strong>（可選）：EQ、音量修飾等—若希望由 HQPlayer 負責升頻／SDM，請避免在 Roon 端重複做不必要的取樣率轉換。</li></ul>",
           titleHq: "連接 HQPlayer",
-          capHq: "訊號概念：Roon 將播放串流送往 HQPlayer；HQPlayer 升頻／SDM 後再送至 DAC。",
+          capHq: "訊號概念：Roon 將串流交給 HQPlayer；HQPlayer 再升頻／SDM 後送至 DAC。",
           bodyHq:
-            "<p>典型分工：<strong>Roon 負責資料庫、播放佇列與 Transport</strong>；<strong>HQPlayer 負責高品質重取樣、噪聲整形／SDM 與輸出至 DAC</strong>（實際選項依作業系統與軟體版本而定）。</p><ol><li>在安裝 HQPlayer 的電腦上啟動程式，並依 Signalyst 文件開啟<strong>網路播放／Embedded／NAA</strong>等所需功能。</li><li>確認該主機與 <strong>Roon Core</strong> 在同一區網或可路由互相存取。</li><li>回到 Roon：<strong>設定 → 音訊（Audio）</strong>（或 Setup 相關頁面），啟用對應的 HQPlayer／Network Audio 端點為 Zone。</li><li>播放時選擇該 Zone；音訊串流會送入 HQPlayer，再由 HQPlayer 以 USB、HDMI 或網路 Renderer 接至 DAC。</li></ol><p>選單名稱與步驟會隨 Roon／HQPlayer 改版而調整，請務必交叉比對 <strong>Roon Labs</strong> 與 <strong>Signalyst</strong> 官方說明。</p>",
+            "<p>常見思路：<strong>Roon 負責曲庫與播放控制</strong>，<strong>HQPlayer 負責高品質重取樣、雜訊整形／SDM 與送至 DAC</strong>（具體選單依系統與版本而定）。</p><ol><li>在運行 HQPlayer 的電腦上啟動程式，並按官方說明開啟<strong>網路播放／NAA／遠端輸入</strong>等相關選項。</li><li>確認該機與 <strong>Roon Core</strong> 在同一區域網路或可路由存取。</li><li>在 Roon：<strong>設定 → 音訊（Audio）</strong> 中啟用對應的 HQPlayer／網路播放端為 Zone。</li><li>播放時選擇該 Zone；音訊送入 HQPlayer，再由 HQPlayer 經 USB 或網路 Renderer 接 DAC。</li></ol><p>選單名稱與步驟會隨 Roon／HQPlayer 更新而變化，請務必對照兩家官方說明。</p>",
           disclaimer:
-            "Roon® 為 Roon Labs 之商標。HQPlayer™ 為 Signalyst 所發行之軟體。本頁為獨立教育用途之摘要，與上述廠商無商業關聯。",
+            "Roon® 為 Roon Labs 的商標。HQPlayer™ 為 Signalyst 的軟體。本頁為獨立教育性摘要，與上述廠商無商業關聯。",
           footerCopy: "音響工程師的數位工具箱 © 2024",
-          footerNote: "科普說明 · 與 ROON／HQPLAYER 無商業關聯"
+          footerNote: "科普說明 · 與 ROON／HQPLAYER 無關聯"
         },
-        ru: {
-          htmlLang: "ru",
-          docTitle: "Roon и HQPlayer · Hi-End Lab",
-          langLabel: "Язык",
-          navBrandText: "Hi-End Lab",
-          navTools: "Инструменты",
-          navKnowledge: "Обзор",
-          navRoon: "roon",
-          navDamping: "Демпф.",
-          navCable: "Кабель",
-          navHq: "Фильтры",
-          navDb: "дБ",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "Roon · основы и HQPlayer",
-          lead: "Кратко: Core и Remote, основные настройки и передача воспроизведения в HQPlayer для ресемплинга (меню зависят от версии).",
-          titleBasics: "Базовые действия",
-          capBasics: "Схема: обзор библиотеки и пульт Remote к Core в сети.",
-          bodyBasics:
-            "<p><strong>Roon Core</strong> хранит библиотеку и движок; <strong>Roon Remote</strong> — пульт. Выбирайте зоны вывода, стройте плейлисты, ищите по локальным файлам и стримингу.</p><p>Core и Remote должны видеть друг друга в одной сети.</p>",
-          titleSettings: "Настройки",
-          capSettings: "Хранилище, аудио-выходы, опциональный DSP.",
-          bodySettings:
-            "<p>В <strong>Settings</strong>: <strong>Storage</strong> — папки; <strong>Audio</strong> — устройства и лимиты частоты; <strong>DSP</strong> — по желанию. Если апсемплинг делает HQPlayer, избегайте лишних конверсий в Roon.</p>",
-          titleHq: "Подключение HQPlayer",
-          capHq: "Поток: Roon Core → HQPlayer → ЦАП.",
-          bodyHq:
-            "<ol><li>Запустите HQPlayer, включите сетевой/NAA режим по инструкции.</li><li>Убедитесь, что машина с HQPlayer доступна для Core.</li><li>В Roon: <strong>Settings → Audio</strong> — активируйте зону HQPlayer.</li><li>Выберите эту зону при воспроизведении.</li></ol><p>Сверяйтесь с документацией Roon Labs и Signalyst.</p>",
-          disclaimer:
-            "Roon® — торговая марка Roon Labs. HQPlayer™ — ПО Signalyst. Независимая учебная страница, не аффилирована с вендорами.",
-          footerCopy: "Цифровой набор инженера по звуку © 2024",
-          footerNote: "СПРАВОЧНО · НЕ СВЯЗАНО С ROON ИЛИ HQPLAYER"
-        },
-        de: {
-          htmlLang: "de",
-          docTitle: "Roon & HQPlayer · Hi-End Lab",
-          langLabel: "Sprache",
-          navBrandText: "Hi-End Lab",
-          navTools: "Werkzeuge",
-          navKnowledge: "Grundlagen",
-          navRoon: "roon",
-          navDamping: "Dämpfung",
-          navCable: "Kabel",
-          navHq: "Filter",
-          navDb: "dB",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "Roon · Bedienung, Settings, HQPlayer",
-          lead: "Kurzüberblick: Core/Remote, wichtige Einstellungen und Übergabe an HQPlayer für Upsampling (Menüs je nach Version).",
-          titleBasics: "Grundbedienung",
-          capBasics: "Illustration: Bibliothek und Remote steuern den Core im LAN.",
-          bodyBasics:
-            "<p><strong>Roon Core</strong> verwaltet Bibliothek und Wiedergabe; <strong>Roon Remote</strong> ist die Fernsteuerung. Zonen wählen, Wiedergabelisten, Suche über lokale Dateien und Streaming.</p>",
-          titleSettings: "Einstellungen",
-          capSettings: "Speicher, Audio, optional DSP.",
-          bodySettings:
-            "<p>Unter <strong>Settings</strong>: Speicherpfade, unter <strong>Audio</strong> Geräte aktivieren und Limits setzen. DSP nur wenn sinnvoll—doppeltes Resampling mit HQPlayer vermeiden.</p>",
-          titleHq: "HQPlayer anbinden",
-          capHq: "Signalpfad: Roon → HQPlayer → DAC.",
-          bodyHq:
-            "<ol><li>HQPlayer starten, Netzwerk-/NAA-Funktion laut Handbuch aktivieren.</li><li>Gleiches LAN wie Roon Core.</li><li>In Roon unter <strong>Audio</strong> die HQPlayer-Zone aktivieren.</li><li>Diese Zone beim Abspielen wählen.</li></ol>",
-          disclaimer:
-            "Roon® ist eine Marke von Roon Labs. HQPlayer™ ist Software von Signalyst. Unabhängige Lehrseite, keine Verbindung zu den Herstellern.",
-          footerCopy: "Digitale Werkzeugkiste des Tontechnikers © 2024",
-          footerNote: "LEHRTEXT · KEINE VERBINDUNG ZU ROON ODER HQPLAYER"
-        },
-        ar: {
-          htmlLang: "ar",
-          docTitle: "Roon و HQPlayer · Hi-End Lab",
-          langLabel: "اللغة",
-          navBrandText: "Hi-End Lab",
-          navTools: "الأدوات",
-          navKnowledge: "مقدّمة",
-          navRoon: "roon",
-          navDamping: "التخميد",
-          navCable: "الكابلات",
-          navHq: "المرشحات",
-          navDb: "ديسيبل",
-          brandLine: "Hi-End Digital Audio Lab",
-          pageTitle: "Roon · الأساسيات و HQPlayer",
-          lead: "ملخص: Core وRemote، الإعدادات الرئيسية، وتمرير التشغيل إلى HQPlayer لإعادة الترميز (تختلف القوائم حسب الإصدار).",
-          titleBasics: "العمل الأساسي",
-          capBasics: "مخطط: تصفح المكتبة والتحكم عن بُعد في Core.",
-          bodyBasics:
-            "<p><strong>Roon Core</strong> للمكتبة والمحرك؛ <strong>Roon Remote</strong> للتحكم. اختر المناطق، قوائم التشغيل، والبحث في الملفات والبث.</p><p>يجب أن يكون Core والجهاز على نفس الشبكة.</p>",
-          titleSettings: "الإعدادات",
-          capSettings: "التخزين، الصوت، DSP اختياري.",
-          bodySettings:
-            "<p>من <strong>Settings</strong>: مسارات التخزين، تفعيل الأجهزة في <strong>Audio</strong>، وتجنب تحويل مزدوج للمعدل إذا كان HQPlayer يتولى ذلك.</p>",
-          titleHq: "ربط HQPlayer",
-          capHq: "التدفق: Roon → HQPlayer → DAC.",
-          bodyHq:
-            "<ol><li>شغّل HQPlayer وفعّل الشبكة/NAA حسب الدليل.</li><li>تأكد من اتصال الجهاز بـ Core.</li><li>في Roon: <strong>Settings → Audio</strong> وفعّل منطقة HQPlayer.</li><li>اختر هذه المنطقة عند التشغيل.</li></ol>",
-          disclaimer:
-            "Roon® علامة تجارية لـ Roon Labs. HQPlayer™ برنامج Signalyst. صفحة تعليمية مستقلة وليست تابعة للجهات.",
-          footerCopy: "صندوق أدوات مهندس الصوت الرقمي © 2024",
-          footerNote: "شرح تعليمي · غير تابع لـ ROON أو HQPLAYER"
-        }
       };
 
       function getStrings(lang) {
@@ -365,15 +271,7 @@
       }
 
       function setBodyLangClass(lang) {
-        document.body.classList.remove(
-          "lang-en",
-          "lang-ja",
-          "lang-zh-CN",
-          "lang-zh-TW",
-          "lang-ru",
-          "lang-de",
-          "lang-ar"
-        );
+        document.body.classList.remove("lang-en", "lang-ja", "lang-zh-CN", "lang-zh-TW");
         document.body.classList.add("lang-" + lang);
       }
 
@@ -382,12 +280,13 @@
       function applyLocale(lang) {
         if (!STRINGS[lang]) lang = DEFAULT_LANG;
         setBodyLangClass(lang);
-        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document.documentElement.dir = "ltr";
         var L = getStrings(lang);
         document.documentElement.lang = L.htmlLang;
         document.title = L.docTitle;
 
         document.getElementById("nav-brand-text").textContent = L.navBrandText;
+        document.getElementById("nav-roon-hqp").textContent = L.navRoonHqp;
         document.getElementById("nav-link-tools").textContent = L.navTools;
         document.getElementById("nav-link-knowledge").textContent = L.navKnowledge;
         document.getElementById("nav-roon").textContent = L.navRoon;
